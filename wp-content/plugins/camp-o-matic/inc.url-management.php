@@ -22,16 +22,16 @@ function campomatic_get_url_prefix() {
 /**
  * Determine if the rewrite rules should be flushed.
  */
-function json_api_maybe_flush_rewrites() {
-	$version = get_option( 'json_api_plugin_version', null );
+function campomatic_maybe_flush_rewrites() {
+	$version = get_option( 'campomatic_plugin_version', null );
 
-	if ( empty( $version ) ||  $version !== JSON_API_VERSION ) {
+	if ( empty( $version ) ||  $version !== CAMPOMATIC_VERSION ) {
 		flush_rewrite_rules();
-		update_option( 'json_api_plugin_version', JSON_API_VERSION );
+		update_option( 'campomatic_plugin_version', CAMPOMATIC_VERSION );
 	}
 
 }
-add_action( 'init', 'json_api_maybe_flush_rewrites', 999 );
+add_action( 'init', 'campomatic_maybe_flush_rewrites', 999 );
 
 /**
  * Load Camp-o-matic
