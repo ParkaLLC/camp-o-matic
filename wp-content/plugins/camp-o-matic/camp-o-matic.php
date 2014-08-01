@@ -7,3 +7,4 @@ Author URI: http://hotchkissconsulting.net/
 */
 
 require( 'inc.register-cpts.php' );
+require( 'inc.url-management.php' );
