@@ -36,14 +36,11 @@ add_action( 'init', 'campomatic_maybe_flush_rewrites', 999 );
 /**
  * Load Camp-o-matic
  */
-function campomatic_loaded() {
+function campomatic_loaded($template) {
 	if ( empty( $GLOBALS['wp']->query_vars['campomatic_route'] ) )
-		return;
+		return $template;
 
-	echo '<h3>Hoorah!</h3>';
-	echo $GLOBALS['wp']->query_vars['campomatic_route'];
-
-	// Finish off our request
-	die();
+	$new_template = dirname( __FILE__ ) . '/views/app.php';
+    return $new_template;
 }
-add_action( 'template_redirect', 'campomatic_loaded', -100 );
+add_action( 'template_include', 'campomatic_loaded', 99 );
