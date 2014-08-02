@@ -5,6 +5,6 @@ Version: 1.0
 Author: Hotchkiss Consulting Group
 Author URI: http://hotchkissconsulting.net/
 */
-
+require('inc.endpoints.php');
 require( 'inc.register-cpts.php' );
 require( 'inc.url-management.php' );
