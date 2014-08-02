@@ -1,1 +1,39 @@
-<p>Single Session</p>
+
+<div class="container">
+    <div id="session_header">
+        <div id="session_title">
+            <h2>The best way to a Taco</h2>
+            <p>1 + 2 = {{ 1 + 2 }}</p>
+            <h4><span>Speaker: </span>Rocco Tripaldi</h4>
+        </div>
+    </div>
+    <div id="content">
+        <div id="questions_answered_questions">
+            <h3>Questions in question</h3>
+            <ul id="questions_list">
+                <li ng-repeat="session in Sessions">
+                    <span class="upvote"><i class="fa fa-heart"></i></span>
+                    <span class="question_title">Can I have a Rocco's Taco?</span>
+                </li>
+                <li class="question">
+                    <span class="upvote"><i class="fa fa-heart"></i></span>
+                    <span class="question_title">Can I have a Rocco's Taco?</span>
+                </li>
+            </ul>
+        </div>
+
+        <div id="questions_answered_area">
+            <h3>Questions answered</h3>
+            <ul id="questions_answered">
+                <li class="question">
+                    <span class="chosen"><i class="fa fa-check"></i></span>
+                    <span class="question_title">Can I have a Rocco's Taco?</span>
+                </li>
+                <li class="question">
+                    <span class="chosen"><i class="fa fa-check"></i></span>
+                    <span class="question_title">Can I have a Rocco's Taco?</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><!-- container -->
