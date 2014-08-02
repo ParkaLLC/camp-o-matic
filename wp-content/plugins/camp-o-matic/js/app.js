@@ -1,15 +1,14 @@
 'use strict';
 
-/* App Module */
 
 var campomatic = angular.module('campomatic', [
     'ngRoute',
     'campomaticControllers',
-    'campomaticControllers'
+    'campomaticServices'
 ]);
 
 campomatic.config(
-    function($routeProvider) {
+    function($routeProvider, $sceProvider) {
         $routeProvider.
             when('/sessions', {
                 templateUrl: '/wp-content/plugins/camp-o-matic/views/session_list.html',
@@ -26,13 +25,21 @@ campomatic.config(
             otherwise({
                 redirectTo: '/sessions'
             });
+        $sceProvider.enabled(false);
     }
 );
 
 var campomaticControllers = angular.module('campomaticControllers', []);
 
-campomaticControllers.controller('SessionListCtrl', ['$scope',
+campomaticControllers.controller('UserController', ['$scope',
     function($scope) {
+        $scope.userLoaded = false;
+    }
+]);
+
+campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
+    function($scope, SessionService) {
+        $scope.Sessions = SessionService.query();
     }
 ]);
 
@@ -46,5 +53,20 @@ campomaticControllers.controller('RegisterCtrl', ['$scope',
     }
 ]);
 
+var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 
-var compomaticServices = angular.module('compomaticServices', ['ngResource']);
+campomaticServices.factory('UserService', ['$resource',
+    function($resource){
+        return $resource('/wp-json/users/me', {}, {
+            query: {method:'GET', params:{context : 'view'}, isArray:true}
+        });
+    }
+]);
+
+campomaticServices.factory('SessionService', ['$resource',
+    function($resource){
+        return $resource('/wp-json/posts?type[]=com_session', {}, {
+            query: {method:'GET', params:{context : 'view'}, isArray:true}
+        });
+    }
+]);
