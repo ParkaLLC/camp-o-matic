@@ -1,5 +1,6 @@
+<?php global $current_user; ?>
 <!DOCTYPE html>
-<html lang="en" ng-app="phonecatApp">
+<html lang="en" ng-app="campomatic">
 <head>
     <meta charset="utf-8" />
     <script src="<?php echo plugins_url( 'js/angular.min.js' , dirname(__FILE__) ); ?>"></script>
@@ -7,8 +8,7 @@
     <script src="<?php echo plugins_url( 'js/app.js' , dirname(__FILE__) ); ?>"></script>
 </head>
 <body>
-    <div id="campomatic">
-        <?php // this is the main container for the campomatic app ?>
+    <div id="mainView" ng-view>
         <p>oh hai</p>
     </div>
 </body>
