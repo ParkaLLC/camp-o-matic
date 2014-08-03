@@ -43,13 +43,13 @@ var campomaticControllers = angular.module('campomaticControllers', []);
 
 campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     function($scope, SessionService) {
-        $scope.Sessions = SessionService.query();
+        $scope.Sessions = SessionService.SessionList.query();
     }
 ]);
 
-campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionSingle',
-    function($scope, SessionSingle) {
-        $scope.SessionsSingle = SessionSingle.getPost( post_id );
+campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams',
+    function($scope, SessionService, $routeParams) {
+        $scope.SessionsSingle = SessionService.SingleSession.query({ session_id : $routeParams.session_id});
     }
 ]);
 
@@ -85,21 +85,13 @@ campomaticServices.factory('UserService', ['$resource', '$cookies',
 
 campomaticServices.factory('SessionService', ['$resource',
     function($resource){
-        return $resource('/wp-json/posts?type[]=com_session', {}, {
-            query: {method:'GET', params:{context : 'view'}, isArray:true}
-        });
-    }
-]);
-
-//Get the post content yo
-campomaticServices.factory('SessionSingle', ['$resource',
-    function($resource){
         return {
-            getPost : function( post_id ) {
-                $resource('/wp-json/posts/' + post_id , {}, {
-                    query: {method:'GET', params:{context : 'view'}, isArray:true}
-                });
-            }
-        }
+            SessionList : $resource('/wp-json/posts?type[]=com_session', {}, {
+                query: {method:'GET', params:{context : 'view'}, isArray:true}
+            }),
+            SingleSession : $resource('/wp-json/posts/:session_id', {}, {
+                query: {method:'GET', params:{context : 'view'}, isArray:false}
+            })
+        };
     }
 ]);

@@ -3,7 +3,7 @@
     <div id="session_header">
         <div id="session_title" ng-controller="SingleSessionCtrl">
             <h2>The best way to a Taco</h2>
-            <p>{{SessionsSingle}}</p>
+            <p ng-bind-html="SessionsSingle.title"></p>
             <h4><span>Speaker: </span>Rocco Tripaldi</h4>
         </div>
     </div>
