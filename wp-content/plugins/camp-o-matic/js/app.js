@@ -3,6 +3,8 @@
 
 var campomatic = angular.module('campomatic', [
     'ngRoute',
+    'ngResource',
+    'ngCookies',
     'campomaticControllers',
     'campomaticServices'
 ]);
@@ -22,20 +24,22 @@ campomatic.config(
                 templateUrl: '/wp-content/plugins/camp-o-matic/views/register.html',
                 controller: 'SessionListCtrl'
             }).
+            when( '/login', {
+                templateUrl: '/wp-content/plugins/camp-o-matic/views/login.html',
+                controller: 'LoginCtrl'
+            }).
+            when('/ask', {
+                templateUrl: '/wp-content/plugins/camp-o-matic/views/ask.html',
+                controller: 'AskCtrl'
+            }).
             otherwise({
-                redirectTo: '/sessions'
+                redirectTo: '/login'
             });
         $sceProvider.enabled(false);
     }
 );
 
 var campomaticControllers = angular.module('campomaticControllers', []);
-
-campomaticControllers.controller('UserController', ['$scope',
-    function($scope) {
-        $scope.userLoaded = false;
-    }
-]);
 
 campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     function($scope, SessionService) {
@@ -53,13 +57,28 @@ campomaticControllers.controller('RegisterCtrl', ['$scope',
     }
 ]);
 
+campomaticControllers.controller('LoginCtrl', ['$scope',
+    function($scope) {
+    }
+]);
+
+campomaticControllers.controller('AskCtrl', ['$scope',
+    function($scope) {
+    }
+]);
+
 var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 
-campomaticServices.factory('UserService', ['$resource',
-    function($resource){
-        return $resource('/wp-json/users/me', {}, {
-            query: {method:'GET', params:{context : 'view'}, isArray:true}
-        });
+campomaticServices.factory('UserService', ['$resource', '$cookies',
+    function($resource, $cookies){
+        return {
+            isLogged : function() {
+
+            },
+            Auth : function(username, pw) {
+
+            }
+        };
     }
 ]);
 

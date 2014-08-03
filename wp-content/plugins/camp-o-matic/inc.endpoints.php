@@ -2,7 +2,7 @@
 
 function campomatic_init() {
     $globals = array(
-        'nonce'=> wp_create_nonce('wp_json')
+        'nonce'=> wp_create_nonce('wp_api')
     );
     echo json_encode($globals);
     exit;
