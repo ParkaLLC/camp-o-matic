@@ -47,8 +47,9 @@ campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     }
 ]);
 
-campomaticControllers.controller('SingleSessionCtrl', ['$scope',
-    function($scope) {
+campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionSingle',
+    function($scope, SessionSingle) {
+        $scope.SessionsSingle = SessionSingle.getPost( post_id );
     }
 ]);
 
@@ -87,5 +88,18 @@ campomaticServices.factory('SessionService', ['$resource',
         return $resource('/wp-json/posts?type[]=com_session', {}, {
             query: {method:'GET', params:{context : 'view'}, isArray:true}
         });
+    }
+]);
+
+//Get the post content yo
+campomaticServices.factory('SessionSingle', ['$resource',
+    function($resource){
+        return {
+            getPost : function( post_id ) {
+                $resource('/wp-json/posts/' + post_id , {}, {
+                    query: {method:'GET', params:{context : 'view'}, isArray:true}
+                });
+            }
+        }
     }
 ]);
