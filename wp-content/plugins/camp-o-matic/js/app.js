@@ -49,7 +49,9 @@ campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
 
 campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams',
     function($scope, SessionService, $routeParams) {
-        $scope.SessionsSingle = SessionService.SingleSession.query({ session_id : $routeParams.session_id});
+        $scope.SessionsSingle = SessionService.SingleSession.query({ session_id : $routeParams.session_id });
+        $scope.SessionQuestions = SessionService.SingleSession.query({ session_id : $routeParams.session_id });
+        console.log( $scope.Sessions );
     }
 ]);
 
@@ -91,6 +93,9 @@ campomaticServices.factory('SessionService', ['$resource',
             }),
             SingleSession : $resource('/wp-json/posts/:session_id', {}, {
                 query: {method:'GET', params:{context : 'view'}, isArray:false}
+            }),
+            SessionQuestion : $resource('/wp-json/posts/:session_id/comments', {}, {
+                query: {method:'GET', params:{context : 'view'}, isArray:true}
             })
         };
     }
