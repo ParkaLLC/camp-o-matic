@@ -1,0 +1,135 @@
+/*Global*/
+
+.ng-scope {
+    margin-left: 0px;
+    padding-left: 0px;
+    margin: 0 auto;
+}
+
+body {
+    width: 100%;
+    background: #fff;
+    margin-left: 0px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+/*Session List*/
+
+#session_header {
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+    background: #f4f4f4;
+}
+
+#session_title {
+    float: left;
+    padding: 0 2em;
+}
+
+#session_speaker {
+    float: right;
+}
+
+#content {
+    width: 90%;
+    float: left;
+    padding: 5%;
+}
+
+
+/*Questions List*/
+#questions_list {
+    list-style: none;
+    padding-left: 0;
+}
+
+#questions_list li.question .upvote{
+    width: auto;
+    margin-right: 2em;
+    float: left;
+    font-size: 2em;
+    color: #ccc;
+}
+
+#questions_list li.question .upvote:hover{
+    color: #8DFF33;
+}
+
+#questions_list li.question {
+    padding: 2em 0;
+    border-bottom: 1px solid #f4f4f4;
+    float: left;
+    width: 100%;
+    line-height: 2em;
+}
+
+/*Questions answered*/
+
+#questions_answered_area {
+    margin-top: 2em;
+}
+
+#questions_answered {
+    list-style: none;
+    padding-left: 0;
+}
+
+#questions_answered li.question .chosen{
+    width: auto;
+    margin-right: 2em;
+    float: left;
+    font-size: 2em;
+    color: #8DFF33;
+}
+
+#questions_answered li.question {
+    padding: 2em 0;
+    border-bottom: 1px solid #f4f4f4;
+    float: left;
+    width: 100%;
+    line-height: 2em;
+}
+
+
+#sidebar {
+    width: 25%;
+    float: left;
+    background: #005fb3;
+}
+
+/*Login page*/
+
+input#get-login-link {
+    border: none;
+    background-color: #2EA2CC;
+}
+
+#get-link {
+    padding: 20px;
+}
+
+
+
+/* #Media Queries
+================================================== */
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {}

@@ -1,3 +1,12 @@
-<p>User: <input ng-model="username" name="username" /></p>
-<p>PW: <input type="password" ng-model="password" name="password" /></p>
-<p><input type="button" value="Login" ng-click="" /></p>
+<div class="container" ng-controller="SingleSessionCtrl">
+
+    <h2>Welcome to {{Name of Wordcamp}}!</h2>
+
+    <h4>Please sign in below to participate in the conversation</h4>
+
+    <p>Username</p>
+    <p><input ng-model="username" name="username" /></p>
+
+    <input type="button" name="get-login-link" id="get-login-link" class="button" value="Get Login Link" />
+
+</div><!-- container -->
