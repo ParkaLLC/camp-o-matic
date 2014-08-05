@@ -60,8 +60,10 @@ campomaticControllers.controller('RegisterCtrl', ['$scope',
     }
 ]);
 
-campomaticControllers.controller('LoginCtrl', ['$scope',
-    function($scope) {
+campomaticControllers.controller('LoginCtrl', ['$scope', 'UserService',
+    function($scope, UserService) {
+        $scope.users = UserService.UserList.query();
+        console.log( $scope.users );
     }
 ]);
 
@@ -74,13 +76,12 @@ var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 
 campomaticServices.factory('UserService', ['$resource', '$cookies',
     function($resource, $cookies){
+        console.log(nonce);
+
         return {
-            isLogged : function() {
-
-            },
-            Auth : function(username, pw) {
-
-            }
+            UserList : $resource('/wp-json/users/me', { }, {
+                query: {method:'POST', params:{  _wp_json_nonce : nonce }, isArray:true}
+            })
         };
     }
 ]);
