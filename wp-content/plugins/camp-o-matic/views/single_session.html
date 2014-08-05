@@ -11,22 +11,8 @@
             <h3>Questions in question</h3>
             <ul id="questions_list">
                 <li ng-repeat="question in SessionQuestions" class="question">
-                    <span class="upvote"><i class="fa fa-heart"></i></span>
-                    <span class="question_title">{{SessionQuestions}}</span>
-                </li>
-            </ul>
-        </div>
-
-        <div id="questions_answered_area">
-            <h3>Questions answered</h3>
-            <ul id="questions_answered">
-                <li class="question">
-                    <span class="chosen"><i class="fa fa-check"></i></span>
-                    <span class="question_title">Can I have a Rocco's Taco?</span>
-                </li>
-                <li class="question">
-                    <span class="chosen"><i class="fa fa-check"></i></span>
-                    <span class="question_title">Can I have a Rocco's Taco?</span>
+                    <div class="upvote"><i class="fa fa-heart"></i></div>
+                    <div class="question_title" ng-bind-html="question.content"></div>
                 </li>
             </ul>
         </div>
