@@ -18,11 +18,11 @@ campomatic.config(
             }).
             when('/session/:session_id', {
                 templateUrl: '/wp-content/plugins/camp-o-matic/views/single_session.html',
-                controller: 'SessionListCtrl'
+                controller: 'SingleSessionCtrl'
             }).
             when( '/register', {
                 templateUrl: '/wp-content/plugins/camp-o-matic/views/register.html',
-                controller: 'SessionListCtrl'
+                controller: 'RegisterCtrl'
             }).
             when( '/login', {
                 templateUrl: '/wp-content/plugins/camp-o-matic/views/login.html',
@@ -51,7 +51,6 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
     function($scope, SessionService, $routeParams) {
         $scope.SessionsSingle = SessionService.SingleSession.query({ session_id : $routeParams.session_id });
         $scope.SessionQuestions = SessionService.SessionQuestion.query({ session_id : $routeParams.session_id });
-        console.log( $scope.SessionQuestions );
     }
 ]);
 
@@ -60,10 +59,8 @@ campomaticControllers.controller('RegisterCtrl', ['$scope',
     }
 ]);
 
-campomaticControllers.controller('LoginCtrl', ['$scope', 'UserService',
-    function($scope, UserService) {
-        $scope.users = UserService.UserList.query();
-        console.log( $scope.users );
+campomaticControllers.controller('LoginCtrl', ['$scope',
+    function($scope) {
     }
 ]);
 
@@ -76,12 +73,9 @@ var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 
 campomaticServices.factory('UserService', ['$resource', '$cookies',
     function($resource, $cookies){
-        console.log(nonce);
 
         return {
-            UserList : $resource('/wp-json/users/me', { }, {
-                query: {method:'POST', params:{  _wp_json_nonce : nonce }, isArray:true}
-            })
+            UserList : 'heyo'
         };
     }
 ]);
@@ -96,7 +90,7 @@ campomaticServices.factory('SessionService', ['$resource',
                 query: {method:'GET', params:{context : 'view'}, isArray:false}
             }),
             SessionQuestion : $resource('/wp-json/posts/:session_id/comments', {}, {
-                query: {method:'GET', params:{context : 'view'}, isArray:true}
+                query: {method:'GET', params:{context : 'view'}, isArray:true }
             })
         };
     }
