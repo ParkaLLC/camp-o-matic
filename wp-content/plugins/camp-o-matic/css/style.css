@@ -9,13 +9,30 @@
 body {
     width: 100%;
     background: #fff;
-    margin-left: 0px;
+    margin: 0px;
+    color: #464646;
 }
 
-.container {
-    width: 100%;
-    max-width: 1120px;
-    margin: 0 auto;
+.button-white {
+    background: #fff;
+    color: #464646;
+    padding: 15px 20px;
+}
+
+.button-white a:hover {
+    text-decoration: none;
+}
+
+
+/* Header */
+#header {
+    background: #21759b;
+    overflow: hidden;
+    color: #fff;
+}
+
+#header h3 {
+    margin: 20px 0;
 }
 
 /*Session List*/
@@ -107,7 +124,14 @@ body {
 
 input#get-login-link {
     border: none;
-    background-color: #2EA2CC;
+    background-color: #21759b;
+    color: #fff;
+    padding: 5px 10px;
+}
+
+#login-main {
+    padding: 4em 0;
+    text-align: center;
 }
 
 #get-link {
