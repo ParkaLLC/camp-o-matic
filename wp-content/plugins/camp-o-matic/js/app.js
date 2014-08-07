@@ -79,7 +79,8 @@ campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
                 'email': $scope.email,
                 'twitter': $scope.twitter
             };
-            console.log( data );
+           var result = UserService.Register.save(data);
+            console.log( result );
         }
     }
 ]);
@@ -107,9 +108,7 @@ campomaticServices.factory('UserService', ['$resource', '$cookies',
     function($resource, $cookies){
 
         return {
-            Register : $resource('/wp-json/posts?type[]=com_session', {}, {
-                save: {method:'POST', params:{context : 'view'}, isArray:true}
-            })
+            Register : $resource('/wp-json/campomatic/register')
         };
     }
 ]);
