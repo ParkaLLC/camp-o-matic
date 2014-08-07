@@ -41,6 +41,12 @@ campomatic.config(
 
 var campomaticControllers = angular.module('campomaticControllers', []);
 
+campomaticControllers.controller('UserCtrl', ['$scope',
+    function($scope) {
+
+    }
+]);
+
 campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     function($scope, SessionService) {
         $scope.Sessions = SessionService.SessionList.query();
