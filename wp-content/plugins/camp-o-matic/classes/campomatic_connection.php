@@ -9,7 +9,7 @@ class Campomatic_Connection {
         );
 
         $routes['/campomatic/register'] = array(
-            array( array( $this, 'register_user'), WP_JSON_Server::ALLMETHODS | WP_JSON_Server::ACCEPT_JSON ),
+            array( array( $this, 'register_user'), WP_JSON_Server::CREATABLE ),
         );
 
         return $routes;

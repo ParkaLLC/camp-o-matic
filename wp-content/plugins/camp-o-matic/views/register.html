@@ -1,2 +1,19 @@
-<p>Register</p>
-<p>{{SessionTitle}}</p>
+<form ng-submit="submit()" ng-show="showForm">
+    <p>
+        <label for="name">Name: </label>
+        <input type="text" name="name" ng-model="name" />
+    </p>
+    <p>
+        <label for="email">Email: </label>
+        <input type="email" name="email" ng-model="email" />
+    </p>
+    <p>
+        <label for="twitter">Twitter Handle: </label>
+        <input type="text" name="twitter" ng-model="twitter" />
+    </p>
+    <p>
+        <input type="submit" value="Get My Login Link" />
+    </p>
+</form>
+
+<p ng-show="showSuccess">{{successMesage}}</p>

@@ -65,8 +65,22 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
     }
 ]);
 
-campomaticControllers.controller('RegisterCtrl', ['$scope',
-    function($scope) {
+campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
+    function($scope, UserService) {
+        $scope.showForm = true;
+        $scope.showSuccess = false;
+        $scope.successMesage = '';
+        $scope.submit = function() {
+            $scope.showForm = false;
+            $scope.showSuccess = true;
+            $scope.successMesage = 'Pooooooooooooop!';
+            var data = {
+                'name': $scope.name,
+                'email': $scope.email,
+                'twitter': $scope.twitter
+            };
+            console.log( data );
+        }
     }
 ]);
 
@@ -93,7 +107,9 @@ campomaticServices.factory('UserService', ['$resource', '$cookies',
     function($resource, $cookies){
 
         return {
-            UserList : 'heyo'
+            Register : $resource('/wp-json/posts?type[]=com_session', {}, {
+                save: {method:'POST', params:{context : 'view'}, isArray:true}
+            })
         };
     }
 ]);
