@@ -25,7 +25,9 @@ $home_url = get_home_url();
 
 </head>
 
-<body ng-controller="UserCtrl">
+<body>
+
+test git name
 
 <div id="header"><!--Global header-->
 	<div class="container">
@@ -37,8 +39,6 @@ $home_url = get_home_url();
 		</div>
 	</div>
 </div><!-- End Global header-->
-
-
 <div id="mainView" ng-view>
 	<p>oh hai</p>
 </div>
