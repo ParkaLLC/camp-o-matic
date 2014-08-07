@@ -39,7 +39,7 @@ test git name
 		</div>
 	</div>
 </div><!-- End Global header-->
-<div id="mainView" ng-view>
+<div id="mainView" class="container" ng-view>
 	<p>oh hai</p>
 </div>
 
