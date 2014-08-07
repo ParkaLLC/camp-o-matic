@@ -1,5 +1,6 @@
 'use strict';
 
+var base_url = '/campomatic/#/';
 
 var campomatic = angular.module('campomatic', [
     'ngRoute',
@@ -32,8 +33,12 @@ campomatic.config(
                 templateUrl: '/wp-content/plugins/camp-o-matic/views/ask.html',
                 controller: 'AskCtrl'
             }).
+            when('/connect/:connection_id', {
+                templateUrl: '/wp-content/plugins/camp-o-matic/views/connect.html',
+                controller: 'ConnectionCtrl'
+            }).
             otherwise({
-                redirectTo: '/login'
+                redirectTo: '/sessions'
             });
         $sceProvider.enabled(false);
     }
@@ -43,7 +48,7 @@ var campomaticControllers = angular.module('campomaticControllers', []);
 
 campomaticControllers.controller('UserCtrl', ['$scope',
     function($scope) {
-
+        $scope.base_url = base_url;
     }
 ]);
 
@@ -67,11 +72,18 @@ campomaticControllers.controller('RegisterCtrl', ['$scope',
 
 campomaticControllers.controller('LoginCtrl', ['$scope',
     function($scope) {
+
     }
 ]);
 
 campomaticControllers.controller('AskCtrl', ['$scope',
     function($scope) {
+    }
+]);
+
+campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams',
+    function($scope, $routeParams) {
+        $scope.id = $routeParams.connection_id;
     }
 ]);
 
