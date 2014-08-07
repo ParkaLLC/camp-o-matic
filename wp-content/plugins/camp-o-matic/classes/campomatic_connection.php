@@ -61,8 +61,6 @@ class Campomatic_Connection {
             return $response;
         }
 
-        update_user_meta( $user)
-
 
         return $response;
     }
