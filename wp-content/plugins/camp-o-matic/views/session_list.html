@@ -1,12 +1,12 @@
 <ul class="sessions-list">
     <li ng-repeat="session in Sessions" class="col-md-4">
-        <a class="title"
+        <h5><a class="title"
            ng-href="#/session/{{session.ID}}"
            ng-bind-html="session.title">
-        </a>
-        <p class="speaker" ng-bind-html="session.meta.speaker"></p>
-        <p class="time" ng-bind-html="session.meta.time">12:00</p>
-        <p class="description" ng-bind-html="session.content"></p>
-        <a class="button-blue" ng-href="#/session/{{session.ID}}">Visit Session</a>
+        </a></h5>
+        <i class="fa fa-clock-o"></i><span class="time" ng-bind-html="session.meta.time"></span><br>
+        <i class="fa fa-user"></i><span class="speaker" ng-bind-html="session.meta.speaker"></span>
+        <p class="description" ng-bind-html="session.excerpt"></p>
+        <a class="btn button-blue" ng-href="#/session/{{session.ID}}">Visit Session</a>
     </li>
 </ul>

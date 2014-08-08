@@ -55,7 +55,7 @@ function campomatic_session_meta( $_post, $post, $context ) {
 
     $time_meta = get_post_meta( $_post['ID'], '_wcpt_session_time', true );
     if( !empty($time_meta) )
-        $_post['meta']['time'] = date('F j, g:i a', $time_meta);
+        $_post['meta']['time'] = date('D, g:i a', $time_meta);
 
     $speaker_meta = get_post_meta( $_post['ID'], '_wcb_session_speakers', true);
 

@@ -13,6 +13,10 @@ body {
     color: #464646;
 }
 
+.btn {
+    border-radius: 0px !important;
+}
+
 .button-white {
     background: #fff;
     color: #464646;
@@ -23,14 +27,17 @@ body {
     text-decoration: none;
 }
 
-.button-blue {
+a.btn.button-blue {
     background: #21759b;
     color: #fff;
     padding: 5px 10px;
+    border: 1px solid #21759b;
 }
 
-.button-blue a:hover {
+a.btn.button-blue:hover {
+    background: #fff;
     text-decoration: none;
+    color: #21759b;
 }
 
 a.btn.btn-green {
@@ -124,6 +131,10 @@ a.btn.btn-green:hover{
 .title {
     font-size: 1.2em;
     width: 100%;
+}
+
+.sessions-list .fa {
+    padding-right: 8px;
 }
 
 .description {
