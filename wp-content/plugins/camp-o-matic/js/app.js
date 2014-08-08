@@ -116,8 +116,8 @@ campomaticServices.factory('UserService', ['$resource', '$cookies',
 campomaticServices.factory('SessionService', ['$resource',
     function($resource){
         return {
-            SessionList : $resource('/wp-json/posts?type[]=com_session', {}, {
-                query: {method:'GET', params:{context : 'view'}, isArray:true}
+            SessionList : $resource('/wp-json/posts', {
+                type : ['wcb_session']
             }),
             SingleSession : $resource('/wp-json/posts/:session_id', {}, {
                 query: {method:'GET', params:{context : 'view'}, isArray:false}

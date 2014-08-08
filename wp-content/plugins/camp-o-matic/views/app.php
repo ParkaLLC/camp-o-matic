@@ -27,8 +27,6 @@ $home_url = get_home_url();
 
 <body>
 
-test git name
-
 <div id="header"><!--Global header-->
 	<div class="container">
 		<div id="header-left" class="col-md-8">
