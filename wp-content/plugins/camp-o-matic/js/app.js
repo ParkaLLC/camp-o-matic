@@ -46,6 +46,7 @@ campomatic.config(
 
 var campomaticControllers = angular.module('campomaticControllers', []);
 
+
 campomaticControllers.controller('UserCtrl', ['$scope',
     function($scope) {
         $scope.base_url = base_url;
@@ -62,7 +63,6 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
     function($scope, SessionService, $routeParams) {
         $scope.SessionsSingle = SessionService.SingleSession.query({ session_id : $routeParams.session_id });
         $scope.SessionQuestions = SessionService.SessionQuestion.query({ session_id : $routeParams.session_id });
-        console.log( $scope.SessionsSingle );
     }
 ]);
 
@@ -70,17 +70,30 @@ campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
     function($scope, UserService) {
         $scope.showForm = true;
         $scope.showSuccess = false;
+        $scope.showError = false;
+        $scope.errorMessage = '';
         $scope.successMesage = '';
         $scope.submit = function() {
             $scope.showForm = false;
             $scope.showSuccess = true;
-            $scope.successMesage = 'Pooooooooooooop!';
+            $scope.successMesage = 'Creating your registration using love and flowers...';
             var data = {
                 'name': $scope.name,
                 'email': $scope.email,
                 'twitter': $scope.twitter
             };
-           var result = UserService.Register.save(data);
+           UserService.Register.save(data,
+               function(s) {
+                   if(s.error) {
+                       $scope.showForm = true;
+                       $scope.showSuccess = false;
+                       $scope.showError = true;
+                       $scope.errorMessage = s.message;
+                   } else {
+                       $scope.successMesage = s.message;
+                   }
+               }
+           );
         }
     }
 ]);
