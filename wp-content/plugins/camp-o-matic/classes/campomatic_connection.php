@@ -62,6 +62,8 @@ class Campomatic_Connection {
         }
         $access_key = wp_generate_password(20, false);
         update_user_meta($user_id, '_campomatic_access_key', $access_key );
+        $twitter = ltrim( $data['twitter'], '@');
+        update_user_meta( $user_id, '_campomatic_twitter', $data['twitter'] );
         $access_url = CAMPOMATIC_URL . 'connect/' . $access_key;
         $message = "Thanks for registering with Camp-o-matic. Click the link to login: \n" . $access_url;
         $subject = 'Camp-o-matic: ' . get_bloginfo( 'name' );
