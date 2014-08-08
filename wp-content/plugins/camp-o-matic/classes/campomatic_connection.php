@@ -60,7 +60,18 @@ class Campomatic_Connection {
             $response->set_data($result);
             return $response;
         }
+        $access_key = wp_generate_password(20, false);
+        update_user_meta($user_id, '_campomatic_access_key', $access_key );
+        $access_url = CAMPOMATIC_URL . 'connect/' . $access_key;
+        $message = "Thanks for registering with Camp-o-matic. Click the link to login: \n" . $access_url;
+        $subject = 'Camp-o-matic: ' . get_bloginfo( 'name' );
+        wp_mail($data['email'], $subject, $message);
 
+        $result = array(
+            'error'=>false,
+            'message'=> 'Thanks for registering. We\'ve emailed you a login link',
+        );
+        $response->set_data($result);
 
         return $response;
     }

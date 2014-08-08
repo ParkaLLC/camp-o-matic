@@ -1,4 +1,5 @@
 <form ng-submit="submit()" ng-show="showForm">
+    <p ng-show="showError">{{errorMessage}}</p>
     <p>
         <label for="name">Name: </label>
         <input type="text" name="name" ng-model="name" />
