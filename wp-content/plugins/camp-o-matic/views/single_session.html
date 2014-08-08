@@ -1,9 +1,12 @@
 
-<div class="container" ng-controller="SingleSessionCtrl">
+<div ng-controller="SingleSessionCtrl">
     <div id="session_header">
-        <div id="session_title">
+        <div id="session_title" class="col-md-10">
             <h2 ng-bind-html="SessionsSingle.title"></h2>
             <h4><span>Speaker: </span>Rocco Tripaldi</h4>
+        </div>
+        <div id="session_title_right_head" class="col-md-2">
+            <a class="btn btn-green" href="http://#">Ask a question</a>
         </div>
     </div>
     <div id="content">

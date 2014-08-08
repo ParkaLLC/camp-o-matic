@@ -55,7 +55,6 @@ campomaticControllers.controller('UserCtrl', ['$scope',
 campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     function($scope, SessionService) {
         $scope.Sessions = SessionService.SessionList.query();
-        console.log(  $scope.Sessions );
     }
 ]);
 

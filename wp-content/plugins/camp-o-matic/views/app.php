@@ -29,11 +29,16 @@ $home_url = get_home_url();
 
 <div id="header"><!--Global header-->
 	<div class="container">
-		<div id="header-left" class="col-md-8">
+		<div id="header-left" class="col-md-5">
 			<h3>Camp-O-Matic: <?php echo $site_title; ?></h3>
 		</div>
-		<div id="header-right" class="col-md-4">
-			<a class="button-white" href="<? echo $home_url; ?>">Return to <?php echo $site_title; ?></a>
+		<div id="header-right" class="col-md-7">
+			<nav class="navbar navbar-default" role="navigation">
+					<ul class="nav nav-pills navbar-right">
+						<li><a href="<?php echo $home_url . '/campomatic/#/sessions' ?>">Sessions</a></li>
+						<li><a href="<?php echo $home_url; ?>">Return to WordCamp Maine</a></li>
+					</ul>
+			</nav>
 		</div>
 	</div>
 </div><!-- End Global header-->
