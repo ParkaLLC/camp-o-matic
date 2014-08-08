@@ -54,10 +54,13 @@ function campomatic_session_meta( $_post, $post, $context ) {
         return $_post;
 
     $time_meta = get_post_meta( $_post['ID'], '_wcpt_session_time', true );
-    if( empty($time_meta) )
-        return $_post;
+    if( !empty($time_meta) )
+        $_post['meta']['session_time'] = date('F j, g:i a', $time_meta);
 
-    $_post['meta']['session_time'] = date('F j, g:i a', $time_meta);
+    $speaker_meta = get_post_meta( $_post['ID'], '_wcb_session_speakers', true);
+
+    if( !empty($speaker_meta))
+        $_post['meta']['speaker'] = rtrim( $speaker_meta, ',');
 
     return $_post;
 }
