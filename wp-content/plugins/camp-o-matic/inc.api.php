@@ -20,6 +20,12 @@ function campomatic_endpoint_registrar() {
 }
 add_action( 'wp_json_server_before_serve', 'campomatic_endpoint_registrar' );
 
+/**
+ *  Filters the allowable json_query_vars to give campomatic more flexability
+ *
+ * @param $vars
+ * @return array
+ */
 function campomatic_query_vars( $vars ) {
     $campomatic_vars = array(
         'meta_key',
@@ -33,5 +39,28 @@ function campomatic_query_vars( $vars ) {
     return $vars;
 }
 add_filter('json_query_vars', 'campomatic_query_vars');
+
+/**
+ * Adds meta to the wcb_session post type
+ * @param $meta
+ * @param $post_id
+ */
+function campomatic_session_meta( $_post, $post, $context ) {
+
+    if( $_post['type'] != 'wcb_session')
+        return $_post;
+
+    if( $context != 'view' )
+        return $_post;
+
+    $time_meta = get_post_meta( $_post['ID'], '_wcpt_session_time', true );
+    if( empty($time_meta) )
+        return $_post;
+
+    $_post['meta']['session_time'] = date('F j, g:i a', $time_meta);
+
+    return $_post;
+}
+add_filter('json_prepare_post', 'campomatic_session_meta', 10, 3);
 
 ?>
