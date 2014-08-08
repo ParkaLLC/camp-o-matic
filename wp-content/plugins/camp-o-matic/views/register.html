@@ -1,8 +1,8 @@
 
-<div class="col-md-6" style="margin: 20px auto;">
+<div class="col-md-6" style="margin: 20px 0;">
     <h3>Sign-up. Ask questions. Vote on questions.</h3>
     <form ng-submit="submit()" ng-show="showForm" role="form" class="form-horizontal">
-        <p ng-show="showError">{{errorMessage}}</p>
+        <p ng-show="showError" class="bg-danger" style="padding: 5px;">{{errorMessage}}</p>
         <div class="form-group">
             <label for="name">Name: </label>
             <input type="text" name="name" ng-model="name" class="form-control" />
@@ -18,5 +18,5 @@
         <button type="submit" class="btn btn-primary">Get My Login Link</button>
     </form>
 
-    <p ng-show="showSuccess">{{successMesage}}</p>
+    <p ng-show="showSuccess" class="bg-success" style="padding: 5px;">{{successMesage}}</p>
 </div>
