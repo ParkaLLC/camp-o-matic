@@ -59,6 +59,10 @@ campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     }
 ]);
 
+
+/*
+Single Session Controller
+ */
 campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams',
     function($scope, SessionService, $routeParams) {
         $scope.SessionsSingle = SessionService.SingleSession.query({ session_id : $routeParams.session_id });
@@ -67,9 +71,14 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
         $scope.toggleModal = function() {
             $scope.modalShown = !$scope.modalShown;
         };
+        console.log( $scope.SessionsSingle );
     }
 ]);
 
+
+/*
+ Register Controller
+ */
 campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
     function($scope, UserService) {
         $scope.showForm = true;

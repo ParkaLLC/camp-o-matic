@@ -55,7 +55,7 @@ button.btn.btn-green.ask-question:hover {
 
 button.btn.btn-green.ask-question {
     font-size: 1.2em;
-    margin: 15px 0;
+    margin: 25px 0;
     text-transform: uppercase;
     width: 100%;
 }
@@ -104,6 +104,7 @@ button.btn.btn-green.ask-question {
     height: auto;
     overflow: hidden;
     width: 100%;
+    padding-top: 20px;
 }
 
 .sessions-list {
@@ -171,10 +172,29 @@ button.btn.btn-green.ask-question {
 
 
 /*Single Session*/
-#session_content {
+#session-description {
     border-top: 1px solid #f4f4f4;
     padding-top: 20px;
     margin-top: 20px;
+}
+
+#session-content {
+    margin-top: 50px;
+}
+
+#session_title img {
+    float: left;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+#session_title h3 {
+    margin-top: 15px;
+    font-weight: 300;
+}
+
+#session_title h4{
+    font-style: italic;
 }
 
 /*Modal Overlay*/
@@ -239,12 +259,18 @@ button.btn.btn-green.ask-question {
 
 
 /*Questions List*/
-#questions_list {
+#questions_list, #questions_answered {
     list-style: none;
     padding-left: 0;
+    overflow: hidden;
 }
 
-#questions_list li.question .upvote{
+.question_title h4{
+    margin-top: 0;
+    font-weight: 300;
+}
+
+#questions_list li.question .upvote {
     width: auto;
     margin-right: 2em;
     float: left;
@@ -256,12 +282,15 @@ button.btn.btn-green.ask-question {
     color: #8DFF33;
 }
 
-#questions_list li.question {
+#questions_list li.question, #questions_answered li.question {
     padding: 2em 0;
-    border-bottom: 1px solid #f4f4f4;
     float: left;
     width: 100%;
     line-height: 2em;
+}
+
+.question-author {
+    font-style: italic;
 }
 
 /*Questions answered*/
@@ -270,25 +299,12 @@ button.btn.btn-green.ask-question {
     margin-top: 2em;
 }
 
-#questions_answered {
-    list-style: none;
-    padding-left: 0;
-}
-
 #questions_answered li.question .chosen{
     width: auto;
     margin-right: 2em;
     float: left;
     font-size: 2em;
     color: #8DFF33;
-}
-
-#questions_answered li.question {
-    padding: 2em 0;
-    border-bottom: 1px solid #f4f4f4;
-    float: left;
-    width: 100%;
-    line-height: 2em;
 }
 
 
@@ -304,7 +320,7 @@ input#get-login-link {
     border: none;
     background-color: #21759b;
     color: #fff;
-    padding: 5px 10px;
+    padding: 5px se;
 }
 
 #login-main {

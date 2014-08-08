@@ -34,10 +34,10 @@ $home_url = get_home_url();
 		</div>
 		<div id="header-right" class="col-md-7">
 			<nav class="navbar navbar-default" role="navigation">
-					<ul class="nav nav-pills navbar-right">
-						<li><a href="<?php echo $home_url . '/campomatic/#/sessions' ?>">Sessions</a></li>
-						<li><a href="<?php echo $home_url; ?>">Return to WordCamp Maine</a></li>
-					</ul>
+				<ul class="nav nav-pills navbar-right">
+					<li><a href="<?php echo $home_url . '/campomatic/#/sessions' ?>">Sessions</a></li>
+					<li><a href="<?php echo $home_url; ?>">Return to WordCamp Maine</a></li>
+				</ul>
 			</nav>
 		</div>
 	</div>

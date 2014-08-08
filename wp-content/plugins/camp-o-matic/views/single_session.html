@@ -1,31 +1,60 @@
 <div ng-controller="SingleSessionCtrl">
 
-    <modal-dialog show='modalShown' width='400px' height='40%'><!--Modal Content-->
+    <modal-dialog show='modalShown' width='400px' height='auto'><!--Modal Content-->
         <h4>Oh you have a question? Go ahead, ask it:</h4>
         <textarea type="text" rows="5" style="width: 100%; height: 75px;" ></textarea>
         <button class="btn btn-green ask-question">Ask it!</button>
     </modal-dialog>
 
     <div id="session_header">
-        <div id="session_title" class="col-md-10">
-            <h2 ng-bind-html="SessionsSingle.title"></h2>
-            <h4><span>Speaker: </span><span ng-bind-html="SessionsSingle.meta.speaker"></span></h4>
+        <div id="session_title" class="col-md-9">
+            <img class="round" src="{{SessionsSingle.author.avatar}}" width="96" height="96">
+            <h3 ng-bind-html="SessionsSingle.title"></h3>
+            <h4><span ng-bind-html="SessionsSingle.meta.speaker"></span></h4>
         </div>
-        <div id="session_title_right_head" class="col-md-2">
+        <div id="session_title_right_head" class="col-md-3">
             <button class="btn btn-green ask-question" ng-click='toggleModal()'>Ask a question</button>
         </div>
-        <div id="session_content" class="col-md-12">
+        <div id="session-description" class="col-md-12">
             <h5>Description:</h5>
             <p ng-bind-html="SessionsSingle.content" ></p>
         </div>
     </div>
-    <div id="content">
-        <div id="questions_answered_questions">
-            <h3>Questions in question</h3>
-            <ul id="questions_list">
-                <li ng-repeat="question in SessionQuestions" class="question">
-                    <div class="upvote"><i class="fa fa-heart"></i></div>
-                    <div class="question_title" ng-bind-html="question.content"></div>
+    <div id="session-content">
+        <h4>Questions</h4>
+        <ul id="questions_list">
+            <li class="question">
+                <div class="upvote col-md-2"><i class="fa fa-heart"></i></div>
+                <div class="question_title col-md-10">
+                    <h4>What is the meaning of life?</h4>
+                    <p class="question-author">- @LarryBird</p>
+                </div>
+            </li>
+            <li class="question">
+                <div class="upvote col-md-2"><i class="fa fa-heart"></i></div>
+                <div class="question_title col-md-10">
+                    <h4>How much wood would a woodchuck chuck, if a woodchuck could chuck wood?</h4>
+                    <p class="question-author">- @LarryBird</p>
+                </div>
+            </li>
+        </ul>
+
+        <div id="questions_answered_area">
+            <h4>Answered</h4>
+            <ul id="questions_answered">
+                <li class="question">
+                    <div class="chosen col-md-2"><i class="fa fa-check"></i></div>
+                    <div class="question_title col-md-10">
+                        <h4>Don't Worry about it?</h4>
+                        <p class="question-author">- @LarryBird</p>
+                    </div>
+                </li>
+                <li class="question">
+                    <div class="chosen col-md-2"><i class="fa fa-check"></i></div>
+                    <div class="question_title col-md-10">
+                        <h4>How many tacos?</h4>
+                        <p class="question-author">- @LarryBird</p>
+                    </div>
                 </li>
             </ul>
         </div>
