@@ -52,6 +52,12 @@ a.btn.btn-green:hover{
     color: #008000;
 }
 
+a.btn.btn-green.ask-question {
+    font-size: 1.2em;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+
 
 /* Header */
 #header {
@@ -98,31 +104,12 @@ a.btn.btn-green:hover{
     width: 100%;
 }
 
-#session_title {
-    float: left;
-    padding: 0 2em;
-}
-
-#session_speaker {
-    float: right;
-}
-
-#content {
-    width: 90%;
-    float: left;
-    padding: 5%;
-}
-
 .sessions-list {
     list-style: none;
     margin-top: 30px;
 }
 
 .sessions-list li {
-    /*width: 21%;*/
-    /*padding: 0 1% 0 0;*/
-    /*margin: 0 1% 0 0;*/
-    /*display: inline-block;*/
     vertical-align: top;
     margin: 20px 0;
     min-height: 150px;
@@ -141,6 +128,13 @@ a.btn.btn-green:hover{
     border-top: 2px solid #f4f4f4;
     padding-top: 10px;
     margin: 5px 0 15px;
+}
+
+/*Single Session*/
+#session_content {
+    border-top: 1px solid #f4f4f4;
+    padding-top: 20px;
+    margin-top: 20px;
 }
 
 

@@ -62,6 +62,7 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
     function($scope, SessionService, $routeParams) {
         $scope.SessionsSingle = SessionService.SingleSession.query({ session_id : $routeParams.session_id });
         $scope.SessionQuestions = SessionService.SessionQuestion.query({ session_id : $routeParams.session_id });
+        console.log( $scope.SessionsSingle );
     }
 ]);
 

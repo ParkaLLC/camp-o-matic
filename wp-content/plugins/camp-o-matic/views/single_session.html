@@ -3,10 +3,14 @@
     <div id="session_header">
         <div id="session_title" class="col-md-10">
             <h2 ng-bind-html="SessionsSingle.title"></h2>
-            <h4><span>Speaker: </span>Rocco Tripaldi</h4>
+            <h4><span>Speaker: </span><span ng-bind-html="SessionsSingle.meta.speaker"></span></h4>
         </div>
         <div id="session_title_right_head" class="col-md-2">
-            <a class="btn btn-green" href="http://#">Ask a question</a>
+            <a class="btn btn-green ask-question" href="http://#">Ask a question</a>
+        </div>
+        <div id="session_content" class="col-md-12">
+            <h5>Description:</h5>
+            <p ng-bind-html="SessionsSingle.content" ></p>
         </div>
     </div>
     <div id="content">
