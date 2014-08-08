@@ -20,4 +20,18 @@ function campomatic_endpoint_registrar() {
 }
 add_action( 'wp_json_server_before_serve', 'campomatic_endpoint_registrar' );
 
+function campomatic_query_vars( $vars ) {
+    $campomatic_vars = array(
+        'meta_key',
+        'meta_value',
+        'meta_query'
+    );
+
+    foreach( $campomatic_vars as $v ) {
+        $vars[] = $v;
+    }
+    return $vars;
+}
+add_filter('json_query_vars', 'campomatic_query_vars');
+
 ?>

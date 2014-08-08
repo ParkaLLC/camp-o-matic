@@ -55,6 +55,7 @@ campomaticControllers.controller('UserCtrl', ['$scope',
 campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     function($scope, SessionService) {
         $scope.Sessions = SessionService.SessionList.query();
+        console.log(  $scope.Sessions );
     }
 ]);
 
@@ -80,7 +81,6 @@ campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
                 'twitter': $scope.twitter
             };
            var result = UserService.Register.save(data);
-            console.log( result );
         }
     }
 ]);
@@ -116,9 +116,7 @@ campomaticServices.factory('UserService', ['$resource', '$cookies',
 campomaticServices.factory('SessionService', ['$resource',
     function($resource){
         return {
-            SessionList : $resource('/wp-json/posts', {
-                type : ['wcb_session']
-            }),
+            SessionList : $resource('/wp-json/posts?type=wcb_session&nonce=' + nonce  + '&filter[posts_per_page]=-1&filter[orderby]=meta_value_num&filter[meta_key]=_wcpt_session_time&filter[meta_query][0][key]=_wcpt_session_type&filter[meta_query][0][value]=session'),
             SingleSession : $resource('/wp-json/posts/:session_id', {}, {
                 query: {method:'GET', params:{context : 'view'}, isArray:false}
             }),

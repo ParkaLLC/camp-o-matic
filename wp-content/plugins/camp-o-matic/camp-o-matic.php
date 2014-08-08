@@ -16,7 +16,7 @@ define('CAMPOMATIC_VERSION', '1.0');
 
 define('CAMPOMATIC_URL', home_url() . '/campomatic/#/' );
 // loads in custom endpoints for the WP REST API
-require('inc.endpoints.php');
+require('inc.api.php');
 // create url / template management
 require( 'inc.url-management.php' );
 
