@@ -19,5 +19,7 @@ define('CAMPOMATIC_URL', home_url() . '/campomatic/#/' );
 require('inc.api.php');
 // create url / template management
 require( 'inc.url-management.php' );
+// custom post type management
+require( 'inc.cpt.php' );
 
 ?>
