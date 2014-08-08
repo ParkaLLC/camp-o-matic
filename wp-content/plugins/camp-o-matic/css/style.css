@@ -40,7 +40,7 @@ a.btn.button-blue:hover {
     color: #21759b;
 }
 
-a.btn.btn-green {
+button.btn.btn-green.ask-question {
     background: #008000;
     color: #fff;
     border-radius: 0px;
@@ -48,15 +48,16 @@ a.btn.btn-green {
     float: right;
 }
 
-a.btn.btn-green:hover{
+button.btn.btn-green.ask-question:hover {
     background: #fff;
     color: #008000;
 }
 
-a.btn.btn-green.ask-question {
+button.btn.btn-green.ask-question {
     font-size: 1.2em;
-    margin-top: 20px;
+    margin: 15px 0;
     text-transform: uppercase;
+    width: 100%;
 }
 
 
@@ -177,35 +178,63 @@ a.btn.btn-green.ask-question {
 }
 
 /*Modal Overlay*/
-.modal-overlay {
-    position: absolute;
-    z-index: 1000000;
-    height: 100%;
-    width: 100%;
-    background: rgba(000,0,0,0.8) ;
-    left: 0;
-    top: 0;
+
+.ng-modal-dialog-content h4 {
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.modal-content {
-    background: #fff;
+.ng-modal-dialog-content {
     padding: 20px;
     text-align: center;
-    position: absolute !important;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    margin: 0 auto;
-}
-
-.modal-content a.btn.btn-green.ask-question {
-    float: none;
 }
 
 .nevermind {
-    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.ng-modal-overlay {
+    /* A dark translucent div that covers the whole screen */
+    position:absolute;
+    z-index:9999;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:#000000;
+    opacity: 0.8;
+}
+.ng-modal-dialog {
+    /* A centered div above the overlay with a box shadow. */
+    z-index:10000;
+    position: absolute;
+    width: 50%; /* Default */
+
+    /* Center the dialog */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+
+    background-color: #fff;
+    box-shadow: 4px 4px 80px #000;
+}
+.ng-modal-dialog-content {
+    padding:20px;
+    text-align: left;
+}
+.ng-modal-close {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 120%;
+    display: inline-block;
+    font-weight: bold;
+    font-family: 'arial', 'sans-serif';
 }
 
 

@@ -1,20 +1,18 @@
+<div ng-controller="SingleSessionCtrl">
 
-<div class="modal-overlay">
-    <div class="modal-content">
+    <modal-dialog show='modalShown' width='400px' height='40%'><!--Modal Content-->
         <h4>Oh you have a question? Go ahead, ask it:</h4>
         <textarea type="text" rows="5" style="width: 100%; height: 75px;" ></textarea>
-        <a class="btn btn-green ask-question" href="http://#">Ask it!</a>
-        <p class="nevermind"><a href="http://#">Nevermind</a></p>
-    </div>
-</div>
-<div ng-controller="SingleSessionCtrl">
+        <button class="btn btn-green ask-question">Ask it!</button>
+    </modal-dialog>
+
     <div id="session_header">
         <div id="session_title" class="col-md-10">
             <h2 ng-bind-html="SessionsSingle.title"></h2>
             <h4><span>Speaker: </span><span ng-bind-html="SessionsSingle.meta.speaker"></span></h4>
         </div>
         <div id="session_title_right_head" class="col-md-2">
-            <a class="btn btn-green ask-question" href="http://#">Ask a question</a>
+            <button class="btn btn-green ask-question" ng-click='toggleModal()'>Ask a question</button>
         </div>
         <div id="session_content" class="col-md-12">
             <h5>Description:</h5>
