@@ -74,4 +74,9 @@ function campomatic_update_heartbeat( $post_id ) {
     fwrite( $handle, $version );
 }
 
+function campomatic_session_publish( $ID, $post ) {
+   campomatic_update_heartbeat($ID);
+}
+add_action(  'publish_wcb_session',  'campomatic_session_publish', 10, 2 );
+
 ?>
