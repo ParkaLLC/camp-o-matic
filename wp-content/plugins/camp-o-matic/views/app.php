@@ -1,8 +1,7 @@
 <?php
 $site_title = get_bloginfo( 'name' );
 $home_url = get_home_url();
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en" ng-app="campomatic">
 <head>
 	<meta charset="utf-8" />
@@ -25,7 +24,7 @@ $home_url = get_home_url();
 
 </head>
 
-<body>
+<body ng-controller="UserCtrl">
 
 <div id="header"><!--Global header-->
 	<div class="container">

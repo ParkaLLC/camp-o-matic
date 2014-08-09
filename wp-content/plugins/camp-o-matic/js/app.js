@@ -71,7 +71,6 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
         $scope.toggleModal = function() {
             $scope.modalShown = !$scope.modalShown;
         };
-        console.log( $scope.SessionsSingle );
     }
 ]);
 
