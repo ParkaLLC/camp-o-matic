@@ -24,7 +24,7 @@ $home_url = get_home_url();
 
 </head>
 
-<body ng-controller="UserCtrl">
+<body ng-controller="UserCtrl" id="campomaticBody">
 
 <div id="header"><!--Global header-->
 	<div class="container">

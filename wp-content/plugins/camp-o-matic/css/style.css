@@ -216,7 +216,7 @@ button.btn.btn-green.ask-question {
 
 .ng-modal-overlay {
     /* A dark translucent div that covers the whole screen */
-    position:absolute;
+    position:fixed;
     z-index:9999;
     top:0;
     left:0;
@@ -255,6 +255,10 @@ button.btn.btn-green.ask-question {
     display: inline-block;
     font-weight: bold;
     font-family: 'arial', 'sans-serif';
+}
+
+.noScroll {
+    overflow: hidden !important;
 }
 
 

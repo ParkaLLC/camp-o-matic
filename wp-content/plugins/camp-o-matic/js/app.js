@@ -29,10 +29,6 @@ campomatic.config(
                 templateUrl: '/wp-content/plugins/camp-o-matic/views/login.html',
                 controller: 'LoginCtrl'
             }).
-            when('/ask', {
-                templateUrl: '/wp-content/plugins/camp-o-matic/views/ask.html',
-                controller: 'AskCtrl'
-            }).
             when('/connect/:connection_id', {
                 templateUrl: '/wp-content/plugins/camp-o-matic/views/connect.html',
                 controller: 'ConnectionCtrl'
@@ -70,6 +66,12 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
         $scope.modalShown = false;
         $scope.toggleModal = function() {
             $scope.modalShown = !$scope.modalShown;
+            var d = document.getElementById("campomaticBody");
+            if( $scope.modalShown ) {
+                d.className = "noScroll";
+            } else {
+                d.className = "";
+            }
         };
     }
 ]);
@@ -151,27 +153,3 @@ campomaticServices.factory('SessionService', ['$resource',
         };
     }
 ]);
-
-
-//Modal stuff!
-campomatic.directive('modalDialog', function() {
-    return {
-        restrict: 'E',
-        scope: {
-            show: '='
-        },
-        replace: true, // Replace with the template below
-        transclude: true, // we want to insert custom content inside the directive
-        link: function(scope, element, attrs) {
-            scope.dialogStyle = {};
-            if (attrs.width)
-                scope.dialogStyle.width = attrs.width;
-            if (attrs.height)
-                scope.dialogStyle.height = attrs.height;
-            scope.hideModal = function() {
-                scope.show = false;
-            };
-        },
-        templateUrl: '/wp-content/plugins/camp-o-matic/views/ask.html'
-    };
-});
