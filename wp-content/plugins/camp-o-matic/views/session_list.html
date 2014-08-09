@@ -1,4 +1,4 @@
-<ul class="sessions-list row-flex row-flex-wrap">
+<ul class="sessions-list">
     <li ng-repeat="session in Sessions" class="col-md-4">
         <h5><a class="title"
            ng-href="#/session/{{session.ID}}"
@@ -6,7 +6,7 @@
         </a></h5>
         <i class="fa fa-clock-o"></i><span class="time" ng-bind-html="session.meta.time"></span><br>
         <i class="fa fa-user"></i><span class="speaker" ng-bind-html="session.meta.speaker"></span>
-        <p class="description" ng-bind-html="session.excerpt"></p>
-        <a class="btn button-blue" ng-href="#/session/{{session.ID}}">Visit Session</a>
+
+        <p><a class="btn button-blue" ng-href="#/session/{{session.ID}}">Visit Session</a></p>
     </li>
 </ul>

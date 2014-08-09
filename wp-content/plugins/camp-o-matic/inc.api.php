@@ -66,4 +66,12 @@ function campomatic_session_meta( $_post, $post, $context ) {
 }
 add_filter('json_prepare_post', 'campomatic_session_meta', 10, 3);
 
+function campomatic_update_heartbeat( $post_id ) {
+    $version = wp_generate_password(20, false);
+    update_post_meta($post_id, '_campomatic_version', $version);
+    $version_heartbeat_file = HEARTBEAT_DIR . $post_id . '.txt';
+    $handle = fopen($version_heartbeat_file, 'w');
+    fwrite( $handle, $version );
+}
+
 ?>
