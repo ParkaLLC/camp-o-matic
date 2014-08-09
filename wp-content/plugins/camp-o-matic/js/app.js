@@ -46,6 +46,16 @@ var campomaticControllers = angular.module('campomaticControllers', []);
 campomaticControllers.controller('UserCtrl', ['$scope',
     function($scope) {
         $scope.base_url = base_url;
+        $scope.modalShown = false;
+        $scope.toggleModal = function() {
+            $scope.modalShown = !$scope.modalShown;
+            var d = document.getElementById("campomaticBody");
+            if( $scope.modalShown ) {
+                d.className = "noScroll";
+            } else {
+                d.className = "";
+            }
+        };
     }
 ]);
 
@@ -63,16 +73,6 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
     function($scope, SessionService, $routeParams) {
         $scope.SessionsSingle = SessionService.SingleSession.query({ session_id : $routeParams.session_id });
         $scope.SessionQuestions = SessionService.SessionQuestion.query({ session_id : $routeParams.session_id });
-        $scope.modalShown = false;
-        $scope.toggleModal = function() {
-            $scope.modalShown = !$scope.modalShown;
-            var d = document.getElementById("campomaticBody");
-            if( $scope.modalShown ) {
-                d.className = "noScroll";
-            } else {
-                d.className = "";
-            }
-        };
     }
 ]);
 
