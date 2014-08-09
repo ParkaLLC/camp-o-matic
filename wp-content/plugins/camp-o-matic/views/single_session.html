@@ -1,16 +1,10 @@
-<div>
+<div ng-controller="SingleSessionCtrl">
 
-    <div class='ng-modal' ng-show='modalShown'>
-        <div class='ng-modal-overlay' ng-click='toggleModal()'></div>
-        <div class='ng-modal-dialog' ng-style='dialogStyle'>
-            <div class='ng-modal-dialog-content'>
-                <h4>Oh you have a question? Go ahead, ask it:</h4>
-                <textarea type="text" rows="5" style="width: 100%; height: 75px;" ></textarea>
-                <button class="btn btn-green ask-question">Ask it!</button>
-            </div>
-            <p class='nevermind' ng-click='toggleModal()'>Nevermind</p>
-        </div>
-    </div>
+    <modal-dialog show='modalShown' width='400px' height='auto'><!--Modal Content-->
+        <h4>Oh you have a question? Go ahead, ask it:</h4>
+        <textarea type="text" rows="5" style="width: 100%; height: 75px;" ></textarea>
+        <button class="btn btn-green ask-question">Ask it!</button>
+    </modal-dialog>
 
     <div id="session_header">
         <div id="session_title" class="col-md-9">

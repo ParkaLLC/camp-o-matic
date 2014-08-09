@@ -276,9 +276,8 @@ button.btn.btn-green.ask-question {
 
 #questions_list li.question .upvote {
     width: auto;
-    margin-right: 2em;
     float: left;
-    font-size: 2em;
+    font-size: 3em;
     color: #ccc;
 }
 
@@ -305,9 +304,8 @@ button.btn.btn-green.ask-question {
 
 #questions_answered li.question .chosen{
     width: auto;
-    margin-right: 2em;
     float: left;
-    font-size: 2em;
+    font-size: 3em;
     color: #8DFF33;
 }
 
