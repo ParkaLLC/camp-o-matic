@@ -157,9 +157,22 @@ campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'U
         $scope.connectionLoading = true;
         $scope.showError = false;
         $scope.showSuccess = false;
+        $scope.errorMessage = '';
+        $scope.successMesage = '';
         UserService.Login.save( { key : $routeParams.connection_id },
             function(s) {
-                console.log(s);
+                if(s.error ) {
+                    $scope.connectionLoading = false;
+                    $scope.showError = true;
+                    $scope.showSuccess = false;
+                    $scope.errorMessage = s.message;
+                } else {
+                    $scope.connectionLoading = false;
+                    $scope.showError = false;
+                    $scope.showSuccess = true;
+                    $scope.successMesage = s.message;
+                    window.location = base_url;
+                }
             }
         );
     }

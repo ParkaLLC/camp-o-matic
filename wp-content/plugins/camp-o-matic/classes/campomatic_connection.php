@@ -9,7 +9,7 @@ class Campomatic_Connection {
         );
 
         $routes['/campomatic/register'] = array(
-            array( array( $this, 'register_user'), WP_JSON_Server::CREATABLE ),
+            array( array( $this, 'register_user'), WP_JSON_Server::CREATABLE | WP_JSON_Server::ACCEPT_JSON  ),
         );
 
         return $routes;
@@ -17,7 +17,7 @@ class Campomatic_Connection {
 
     public function login_user($data = array() ) {
         $response = new WP_JSON_Response();
-        error_log( print_r( $data, true ), 1, 'rocco@hotchkissconsulting.net');
+
         if( empty( $data['key'] )) {
             $result = array(
                 'error'=>true,
@@ -28,18 +28,16 @@ class Campomatic_Connection {
         }
 
         $args = array(
-            'number'=>1,
-            'meta_query'=>array(
+            'meta_query'=> array(
                 array(
                     'key'=>'_campomatic_access_key',
-                    'value'=> $data['key']
+                    'value'=>$data['key']
                 )
             )
         );
 
-        $user = get_users( $args );
-
-        if( empty( $data['key'] )) {
+        $query = new WP_User_Query($args);
+        if( empty( $query->results )) {
             $result = array(
                 'error'=>true,
                 'message'=>'We could not find your access key.',
@@ -48,7 +46,10 @@ class Campomatic_Connection {
             return $response;
         }
 
-        error_log( print_r( $user, true ), 1, 'tripaldir@gmail.net');
+        $user = $query->results[0];
+        error_log( print_r($user,true),1,'rocco@hotchkissconsulting.net');
+        wp_set_auth_cookie( $user->ID );
+
         $result = array(
             'error'=>false,
             'message'=>'Success!',
@@ -58,8 +59,6 @@ class Campomatic_Connection {
     }
 
     public function register_user($data = array()) {
-
-
         $response = new WP_JSON_Response();
 
         if( !isset($data['email']) || ! is_email($data['email']) ) {
@@ -81,13 +80,8 @@ class Campomatic_Connection {
         }
 
         $pass = wp_generate_password();
-        $userdata = array(
-            'user_pass' => $pass,
-            'user_login'=> $data['email'],
-            'display_name'=>$data['name'],
-            'user_email'=>$data['email'],
-        );
-        $user_id = wp_insert_user( $userdata );
+
+        $user_id = wp_create_user($data['email'], $pass, $data['email']);
 
         if( $user_id instanceof WP_Error ) {
             $result = array(
@@ -97,6 +91,7 @@ class Campomatic_Connection {
             $response->set_data($result);
             return $response;
         }
+
         $access_key = wp_generate_password(20, false);
         update_user_meta($user_id, '_campomatic_access_key', $access_key );
         $twitter = ltrim( $data['twitter'], '@');
