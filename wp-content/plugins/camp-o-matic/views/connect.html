@@ -1,1 +1,8 @@
-<p>Connection: {{id}}</p>
+<div class="col-md-6" style="margin: 20px 0;">
+    <p ng-show="connectionLoading">We are spinning our wheels to get you logged in. Hold your horses, please.</p>
+    <p ng-show="showSuccess" class="bg-success" style="padding: 5px;">{{successMesage}}</p>
+    <p ng-show="showError" class="bg-danger" style="padding: 5px;">
+        {{errorMessage}}<br />
+        <a ng-href="{{base_url}}login">Get A New Login Link</a>
+    </p>
+</div>

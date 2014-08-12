@@ -20,6 +20,7 @@ $home_url = get_home_url();
 	<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<script>
 		var nonce = '<?php echo wp_create_nonce('wp_json'); ?>';
+        var base_url = '/campomatic/#/';
 	</script>
 
 </head>

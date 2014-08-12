@@ -1,7 +1,5 @@
 'use strict';
 
-var base_url = '/campomatic/#/';
-
 var campomatic = angular.module('campomatic', [
     'ngRoute',
     'ngResource',
@@ -154,9 +152,16 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
     }
 ]);
 
-campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams',
-    function($scope, $routeParams) {
-        $scope.id = $routeParams.connection_id;
+campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'UserService',
+    function($scope, $routeParams, UserService) {
+        $scope.connectionLoading = true;
+        $scope.showError = false;
+        $scope.showSuccess = false;
+        UserService.Login.save( { key : $routeParams.connection_id },
+            function(s) {
+                console.log(s);
+            }
+        );
     }
 ]);
 
@@ -166,7 +171,8 @@ campomaticServices.factory('UserService', ['$resource', '$cookies',
     function($resource, $cookies){
 
         return {
-            Register : $resource('/wp-json/campomatic/register')
+            Register : $resource('/wp-json/campomatic/register'),
+            Login : $resource('/wp-json/campomatic/login')
         };
     }
 ]);
