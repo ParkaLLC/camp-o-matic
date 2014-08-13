@@ -66,10 +66,11 @@ function campomatic_session_meta( $_post, $post, $context ) {
     if( !empty( $speaker ) )
         $_post['meta']['speaker_slug'] = $speaker->post_name;
 
-    if ( !empty( $speaker_gravatar ) )
-        $email = trim( $speaker_gravatar );
-        $email = strtolower( $email );
-        $_post['meta']['speaker_grav'] = md5( $email );
+    if ( !empty( $speaker_gravatar ) ) {
+        $_post['meta']['speaker_grav'] = md5( strtolower( trim( $speaker_gravatar) ) );
+    } else {
+        $_post['meta']['speaker_grav'] = '';
+    }
 
     if( !empty($speaker_meta))
         $_post['meta']['speaker'] = rtrim( $speaker_meta, ',');
