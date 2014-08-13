@@ -47,11 +47,18 @@ class Campomatic_Connection {
             return $response;
         }
 
+        $key = update_user_meta($user->ID, '_campomatic_access_key' );
+        $access_url = CAMPOMATIC_URL . 'connect/' . $access_key;
+        $message .= "You can click the following link anytime you want to login to camp-o-matic: \n" . $access_url;
+        $subject = 'Camp-o-matic: ' . get_bloginfo( 'name' ) . ' Login Link';
+        wp_mail($user->user_email, $subject, $message);
+
         $result = array(
             'error'=>false,
-            'message'=>'You are doing ok.',
+            'message'=> 'We sent you a login link.',
         );
         $response->set_data($result);
+
         return $response;
     }
 
@@ -169,7 +176,7 @@ class Campomatic_Connection {
         $access_url = CAMPOMATIC_URL . 'connect/' . $access_key;
         $message = "Thanks for registering with Camp-o-matic.";
         $message .= "You can click the following link anytime you want to login: \n" . $access_url;
-        $subject = 'Camp-o-matic: ' . get_bloginfo( 'name' );
+        $subject = 'Camp-o-matic: ' . get_bloginfo( 'name' ) . ' Registration';
         wp_mail($data['email'], $subject, $message);
 
         wp_set_auth_cookie( $user_id );
