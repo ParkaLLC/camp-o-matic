@@ -237,6 +237,20 @@ campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'U
 
 var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 
+//Ask factory
+campomaticServices.factory('AskCtrl', ['$resource',
+    function($resource){
+
+        return {
+            Register : $resource('/wp-json/campomatic/register'),
+            Login : $resource('/wp-json/campomatic/login'),
+            GetLogin : $resource('/wp-json/campomatic/get_login'),
+            Auth : $resource('/wp-json/campomatic/auth',{_wp_json_nonce : nonce})
+        };
+    }
+]);
+
+
 campomaticServices.factory('UserService', ['$resource', '$cookies',
     function($resource, $cookies){
 

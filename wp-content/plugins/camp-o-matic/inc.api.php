@@ -58,15 +58,20 @@ function campomatic_session_meta( $_post, $post, $context ) {
         $_post['meta']['time'] = date('D, g:i a', $time_meta);
 
     $speaker_meta = get_post_meta( $_post['ID'], '_wcb_session_speakers', true);
+    $speaker_meta = rtrim( $speaker_meta, ',');
+    $speaker_array = explode(",", $speaker_meta);
+
     $speaker_id = get_post_meta( $_post['ID'], '_wcpt_speaker_id', true);
     $speaker_gravatar = get_post_meta( $speaker_id, '_wcb_speaker_email', true );
+
+    $speaker_number = count( $speaker_array );
 
     $speaker = get_post( $speaker_id );
 
     if( !empty( $speaker ) )
         $_post['meta']['speaker_slug'] = $speaker->post_name;
 
-    if ( !empty( $speaker_gravatar ) ) {
+    if ( !empty( $speaker_gravatar ) && $speaker_number === 1  ) {
         $_post['meta']['speaker_grav'] = md5( strtolower( trim( $speaker_gravatar) ) );
     } else {
         $_post['meta']['speaker_grav'] = '';
