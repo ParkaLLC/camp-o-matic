@@ -134,6 +134,7 @@ campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
                        $scope.errorMessage = s.message;
                    } else {
                        $scope.successMesage = s.message;
+                       window.location = home_url + '/campomatic/';
                    }
                }
            );
