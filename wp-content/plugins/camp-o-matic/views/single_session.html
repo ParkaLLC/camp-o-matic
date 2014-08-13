@@ -5,8 +5,10 @@
         <div class='ng-modal-dialog' ng-style='dialogStyle'>
             <div class='ng-modal-dialog-content'>
                 <h4>Oh you have a question? Go ahead, ask it:</h4>
-                <textarea type="text" rows="5" style="width: 100%; height: 75px;" ></textarea>
-                <button class="btn btn-green ask-question">Ask it!</button>
+                <form ng-submit="submit()" ng-show="showForm" role="form" class="form-horizontal">
+                    <textarea name="question" ng-model="question" rows="5" style="width: 100%; height: 75px;" ></textarea>
+                    <button class="btn btn-green ask-question">Ask it!</button>
+                </form>
             </div>
             <p class='nevermind' ng-click='toggleModal()'>Nevermind</p>
         </div>
@@ -14,7 +16,7 @@
 
     <div id="session_header">
         <div id="session_title" class="col-md-9">
-            <img class="round" src="{{SessionsSingle.author.avatar}}" width="96" height="96">
+            <a ng-href="/speaker/{{SessionsSingle.meta.speaker_slug}}"><img class="round" src="http://www.gravatar.com/avatar/{{SessionsSingle.meta.speaker_grav}}" width="96" height="96"></a>
             <h3 ng-bind-html="SessionsSingle.title"></h3>
             <h4><span ng-bind-html="SessionsSingle.meta.speaker"></span></h4>
         </div>
