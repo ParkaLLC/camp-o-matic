@@ -32,6 +32,7 @@ a.btn.button-blue {
     color: #fff;
     padding: 5px 10px;
     border: 1px solid #21759b;
+    font-size: .9em;
 }
 
 a.btn.button-blue:hover {
@@ -118,7 +119,7 @@ button.btn.btn-green.ask-question {
 }
 
 .title {
-    font-size: 1.2em;
+    font-size: 1em;
     width: 100%;
 }
 
@@ -130,6 +131,18 @@ button.btn.btn-green.ask-question {
     border-top: 2px solid #f4f4f4;
     padding-top: 10px;
     margin: 5px 0 15px;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.table-head {
+    background: #f4f4f4;
+}
+
+.time {
+    font-weight: bold;
 }
 
 
