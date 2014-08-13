@@ -68,7 +68,6 @@ class Campomatic_Connection {
         }
 
         global $current_user;
-        error_log( print_r($current_user, true),1,'rocco@hotchkissconsulting.net');
         $result = array(
             'error'=>false,
             'message'=>'we in',
