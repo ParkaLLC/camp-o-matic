@@ -81,6 +81,15 @@ class Campomatic_Connection {
     public function login_user($data = array() ) {
         $response = new WP_JSON_Response();
 
+        if( is_user_logged_in() ) {
+            $result = array(
+                'error'=>false,
+                'message'=>'Success!',
+            );
+            $response->set_data($result);
+            return $response;
+        }
+
         if( empty( $data['key'] )) {
             $result = array(
                 'error'=>true,
@@ -110,7 +119,6 @@ class Campomatic_Connection {
         }
 
         $user = $query->results[0];
-        error_log( print_r($user,true),1,'rocco@hotchkissconsulting.net');
         wp_set_auth_cookie( $user->ID );
 
         $result = array(

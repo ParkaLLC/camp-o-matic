@@ -210,8 +210,7 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
 
 campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'UserService',
     function($scope, $routeParams, UserService) {
-        var unlogged = $scope.ReverseAuth();
-        if( unlogged ) {
+
             $scope.connectionLoading = true;
             $scope.showError = false;
             $scope.showSuccess = false;
@@ -229,11 +228,10 @@ campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'U
                         $scope.showError = false;
                         $scope.showSuccess = true;
                         $scope.successMesage = s.message;
-                        window.location = base_url;
+                        window.location = home_url + '/campomatic/';
                     }
                 }
             );
-        }
     }
 ]);
 
