@@ -41,8 +41,8 @@ campomatic.config(
 var campomaticControllers = angular.module('campomaticControllers', []);
 
 
-campomaticControllers.controller('UserCtrl', ['$scope',
-    function($scope) {
+campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
+    function($scope, UserService) {
         $scope.base_url = base_url;
         $scope.modalShown = false;
         $scope.toggleModal = function() {
@@ -54,11 +54,42 @@ campomaticControllers.controller('UserCtrl', ['$scope',
                 d.className = "";
             }
         };
+        $scope.Auth = function() {
+            $scope.showLoading = true;
+            $scope.showMain = false;
+            UserService.Auth.get({}, function(s){
+                console.log(s);
+                if(s.error) {
+                    window.location = base_url + 'login';
+                    return false;
+                } else {
+                    $scope.showLoading = false;
+                    $scope.showMain = true;
+                    return true;
+                }
+            });
+        };
+        $scope.ReverseAuth = function() {
+            $scope.showLoading = true;
+            $scope.showMain = false;
+            UserService.Auth.get({}, function(s){
+                console.log(s);
+                if(s.error) {
+                    $scope.showLoading = false;
+                    $scope.showMain = true;
+                    return true;
+                } else {
+                    window.location = base_url;
+                    return false;
+                }
+            });
+        };
     }
 ]);
 
 campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     function($scope, SessionService) {
+        $scope.Auth();
         $scope.Sessions = SessionService.SessionList.query();
     }
 ]);
@@ -69,8 +100,8 @@ Single Session Controller
  */
 campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams',
     function($scope, SessionService, $routeParams) {
-        $scope.SessionsSingle = SessionService.SingleSession.query({ session_id : $routeParams.session_id });
-        $scope.SessionQuestions = SessionService.SessionQuestion.query({ session_id : $routeParams.session_id });
+        $scope.Auth();
+        $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id });
     }
 ]);
 
@@ -80,6 +111,7 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
  */
 campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
     function($scope, UserService) {
+        $scope.ReverseAuth();
         $scope.showForm = true;
         $scope.showSuccess = false;
         $scope.showError = false;
@@ -112,7 +144,7 @@ campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
 
 campomaticControllers.controller('LoginCtrl', ['$scope',
     function($scope) {
-
+        $scope.ReverseAuth();
     }
 ]);
 
@@ -154,27 +186,30 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
 
 campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'UserService',
     function($scope, $routeParams, UserService) {
-        $scope.connectionLoading = true;
-        $scope.showError = false;
-        $scope.showSuccess = false;
-        $scope.errorMessage = '';
-        $scope.successMesage = '';
-        UserService.Login.save( { key : $routeParams.connection_id },
-            function(s) {
-                if(s.error ) {
-                    $scope.connectionLoading = false;
-                    $scope.showError = true;
-                    $scope.showSuccess = false;
-                    $scope.errorMessage = s.message;
-                } else {
-                    $scope.connectionLoading = false;
-                    $scope.showError = false;
-                    $scope.showSuccess = true;
-                    $scope.successMesage = s.message;
-                    window.location = base_url;
+        var unlogged = $scope.ReverseAuth();
+        if( unlogged ) {
+            $scope.connectionLoading = true;
+            $scope.showError = false;
+            $scope.showSuccess = false;
+            $scope.errorMessage = '';
+            $scope.successMesage = '';
+            UserService.Login.save( { key : $routeParams.connection_id },
+                function(s) {
+                    if(s.error ) {
+                        $scope.connectionLoading = false;
+                        $scope.showError = true;
+                        $scope.showSuccess = false;
+                        $scope.errorMessage = s.message;
+                    } else {
+                        $scope.connectionLoading = false;
+                        $scope.showError = false;
+                        $scope.showSuccess = true;
+                        $scope.successMesage = s.message;
+                        window.location = base_url;
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 ]);
 
@@ -185,7 +220,8 @@ campomaticServices.factory('UserService', ['$resource', '$cookies',
 
         return {
             Register : $resource('/wp-json/campomatic/register'),
-            Login : $resource('/wp-json/campomatic/login')
+            Login : $resource('/wp-json/campomatic/login'),
+            Auth : $resource('/wp-json/campomatic/auth',{_wp_json_nonce : nonce})
         };
     }
 ]);
@@ -194,12 +230,7 @@ campomaticServices.factory('SessionService', ['$resource',
     function($resource){
         return {
             SessionList : $resource('/wp-json/posts?type=wcb_session&_wp_json_nonce=' + nonce  + '&filter[posts_per_page]=-1&filter[orderby]=meta_value_num&filter[meta_key]=_wcpt_session_time&filter[meta_query][0][key]=_wcpt_session_type&filter[meta_query][0][value]=session'),
-            SingleSession : $resource('/wp-json/posts/:session_id', {}, {
-                query: {method:'GET', params:{context : 'view'}, isArray:false}
-            }),
-            SessionQuestion : $resource('/wp-json/posts/:session_id/comments', {}, {
-                query: {method:'GET', params:{context : 'view'}, isArray:true }
-            })
+            SingleSession : $resource('/wp-json/posts/:session_id')
         };
     }
 ]);

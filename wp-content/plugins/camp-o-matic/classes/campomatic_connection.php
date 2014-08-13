@@ -12,7 +12,34 @@ class Campomatic_Connection {
             array( array( $this, 'register_user'), WP_JSON_Server::CREATABLE | WP_JSON_Server::ACCEPT_JSON  ),
         );
 
+        $routes['/campomatic/auth'] = array(
+            array( array( $this, 'authorize_user'), WP_JSON_Server::READABLE ),
+        );
+
         return $routes;
+    }
+
+    public function authorize_user() {
+        $response = new WP_JSON_Response();
+
+        if( !is_user_logged_in() ) {
+            $result = array(
+                'error'=>true,
+                'message'=>'Authorization required.',
+            );
+            $response->set_data($result);
+            return $response;
+        }
+
+        global $current_user;
+        error_log( print_r($current_user, true),1,'rocco@hotchkissconsulting.net');
+        $result = array(
+            'error'=>false,
+            'message'=>'we in',
+        );
+        $response->set_data($result);
+
+        return $response;
     }
 
     public function login_user($data = array() ) {

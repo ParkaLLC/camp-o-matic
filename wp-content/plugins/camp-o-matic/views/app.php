@@ -42,10 +42,13 @@ $home_url = get_home_url();
 		</div>
 	</div>
 </div><!-- End Global header-->
-<div id="mainView" class="container" ng-view>
+<div id="mainView" class="container" ng-view ng-show="showMain">
 	<p>oh hai</p>
 </div>
 
+<div id="loading" ng-show="showLoading">
+    <img src="<?php echo plugins_url( 'images/loading.gif' , dirname(__FILE__) ); ?>" />
+</div>
 
 <div id="footer"><!--Global footer-->
 
