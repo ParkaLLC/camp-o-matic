@@ -58,7 +58,6 @@ campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
             $scope.showLoading = true;
             $scope.showMain = false;
             UserService.Auth.get({}, function(s){
-                console.log(s);
                 if(s.error) {
                     window.location = base_url + 'login';
                     return false;
@@ -73,7 +72,6 @@ campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
             $scope.showLoading = true;
             $scope.showMain = false;
             UserService.Auth.get({}, function(s){
-                console.log(s);
                 if(s.error) {
                     $scope.showLoading = false;
                     $scope.showMain = true;
@@ -142,9 +140,34 @@ campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
     }
 ]);
 
-campomaticControllers.controller('LoginCtrl', ['$scope',
-    function($scope) {
+campomaticControllers.controller('LoginCtrl', ['$scope', 'UserService',
+    function($scope, UserService) {
         $scope.ReverseAuth();
+        $scope.showForm = true;
+        $scope.showSuccess = false;
+        $scope.showError = false;
+        $scope.errorMessage = '';
+        $scope.successMesage = '';
+        $scope.submit = function() {
+            $scope.showForm = false;
+            $scope.showSuccess = true;
+            $scope.successMesage = 'Checking our records. Playing a jaunty tune.';
+            var data = {
+                'email': $scope.email
+            };
+            UserService.GetLogin.save(data,
+                function(s) {
+                    if(s.error) {
+                        $scope.showForm = true;
+                        $scope.showSuccess = false;
+                        $scope.showError = true;
+                        $scope.errorMessage = s.message;
+                    } else {
+                        $scope.successMesage = s.message;
+                    }
+                }
+            );
+        }
     }
 ]);
 
@@ -168,7 +191,7 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
                 'status': 'publish',
                 'type': 'happiness'
             };
-            QuestionService.Register.save(data,
+            QuestionService.GetLogin.save(data,
                 function(s) {
                     if(s.error) {
                         $scope.showForm = true;
@@ -221,6 +244,7 @@ campomaticServices.factory('UserService', ['$resource', '$cookies',
         return {
             Register : $resource('/wp-json/campomatic/register'),
             Login : $resource('/wp-json/campomatic/login'),
+            GetLogin : $resource('/wp-json/campomatic/get_login'),
             Auth : $resource('/wp-json/campomatic/auth',{_wp_json_nonce : nonce})
         };
     }
@@ -230,7 +254,7 @@ campomaticServices.factory('SessionService', ['$resource',
     function($resource){
         return {
             SessionList : $resource('/wp-json/posts?type=wcb_session&_wp_json_nonce=' + nonce  + '&filter[posts_per_page]=-1&filter[orderby]=meta_value_num&filter[meta_key]=_wcpt_session_time&filter[meta_query][0][key]=_wcpt_session_type&filter[meta_query][0][value]=session'),
-            SingleSession : $resource('/wp-json/posts/:session_id')
+            SingleSession : $resource('/wp-json/posts/:session_id',{_wp_json_nonce : nonce})
         };
     }
 ]);

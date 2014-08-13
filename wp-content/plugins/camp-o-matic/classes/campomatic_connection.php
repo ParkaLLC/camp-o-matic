@@ -16,7 +16,43 @@ class Campomatic_Connection {
             array( array( $this, 'authorize_user'), WP_JSON_Server::READABLE ),
         );
 
+        $routes['/campomatic/get_login'] = array(
+            array( array( $this, 'get_login'), WP_JSON_Server::CREATABLE | WP_JSON_Server::ACCEPT_JSON  ),
+        );
+
         return $routes;
+    }
+
+    public function get_login($data) {
+        $response = new WP_JSON_Response();
+
+        if( !isset($data['email']) || ! is_email($data['email']) ) {
+            $result = array(
+                'error'=>true,
+                'message'=>'That\'s not an email address.',
+            );
+            $response->set_data($result);
+            return $response;
+        }
+
+
+        $user = get_user_by('email', $data['email']);
+
+        if( empty($user) ) {
+            $result = array(
+                'error'=>true,
+                'message'=>'We have no record of that email.',
+            );
+            $response->set_data($result);
+            return $response;
+        }
+
+        $result = array(
+            'error'=>false,
+            'message'=>'You are doing ok.',
+        );
+        $response->set_data($result);
+        return $response;
     }
 
     public function authorize_user() {

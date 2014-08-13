@@ -1,14 +1,14 @@
-<div class="container">
-
-    <h2>Welcome to [site_title]!</h2>
-
-    <h4>Please sign in below to participate in the conversation</h4>
-
-    <p>Username</p>
-    <p><input ng-model="username" name="username" /></p>
-
-    <input type="button" name="get-login-link" id="get-login-link" class="button" value="Get Login Link" />
-
-    <p><a ng-href="{{base_url}}register">Register Here</a></p>
-
-</div><!-- container -->
+<div class="col-md-6" style="margin: 20px 0;">
+    <h3>Participate in the Conversations</h3>
+    <p>Enter the email you registered with Camp-o-matic, and we'll send you your login link</p>
+    <form ng-submit="submit()" ng-show="showForm" role="form" class="form-horizontal">
+        <p ng-show="showError" class="bg-danger" style="padding: 5px;">{{errorMessage}}</p>
+        <div class="form-group">
+            <label for="email">Email: </label>
+            <input type="email" name="email" ng-model="email" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Get My Login Link</button>
+    </form>
+    <p ng-show="showSuccess" class="bg-success" style="padding: 5px;">{{successMesage}}</p>
+    <p><a href="/campomatic/#/register">Register here</a></p>
+</div>
