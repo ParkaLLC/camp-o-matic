@@ -45,6 +45,7 @@ campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
     function($scope, UserService) {
         $scope.base_url = base_url;
         $scope.modalShown = false;
+        $scope.showSubHeader = false;
         $scope.toggleModal = function() {
             $scope.modalShown = !$scope.modalShown;
             var d = document.getElementById("campomaticBody");
@@ -65,7 +66,7 @@ campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
                     $scope.showLoading = false;
                     $scope.showMain = true;
                     $scope.user = s.message;
-                    console.log( $scope.user );
+                    $scope.showSubHeader = true;
                     return true;
                 }
             });

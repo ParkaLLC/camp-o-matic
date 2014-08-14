@@ -44,13 +44,13 @@ get_currentuserinfo();
 			</nav>
 		</div>
 	</div>
-    <div id="sub-header-bar">
+    <div id="sub-header-bar" ng-show="showSubHeader">
         <div class="container">
             <div id="sub-header-content-left" class="col-md-6">
-                <p>Currently logged in as: <?php echo $current_user->display_name . ', ' . $current_user->user_email; ?></p>
+                <p>Howdy <?php echo $current_user->display_name; ?></p>
             </div>
             <div id="sub-header-content-right" class="col-md-6">
-                <a href="http://#">Log out</a>
+                <a href="<?php echo wp_logout_url( CAMPOMATIC_URL ); ?>">Log out</a>
             </div>
         </div>
     </div>
