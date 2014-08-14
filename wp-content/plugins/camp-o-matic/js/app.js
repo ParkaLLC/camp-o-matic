@@ -99,8 +99,13 @@ Single Session Controller
 campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams',
     function($scope, SessionService, $routeParams) {
         $scope.Auth();
-        $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id });
-        console.log( $scope.SessionsSingle );
+        $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
+            function() {
+                // we will initiate the heartbeat once we have information about the session
+                console.log( $scope.SessionsSingle.meta.version );
+            }
+        );
+
     }
 ]);
 
@@ -134,6 +139,7 @@ campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
                        $scope.errorMessage = s.message;
                    } else {
                        $scope.successMesage = s.message;
+                       window.location = home_url + '/campomatic/';
                    }
                }
            );
@@ -176,34 +182,20 @@ campomaticControllers.controller('LoginCtrl', ['$scope', 'UserService',
 /*
 Ask Controller
  */
-campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
-    function($scope, QuestionService) {
+campomaticControllers.controller('AskCtrl', ['$scope',
+    function($scope) {
         $scope.showForm = true;
         $scope.showSuccess = false;
         $scope.showError = false;
         $scope.errorMessage = '';
-        $scope.successMesage = '';
+        $scope.successMessage = '';
+        $scope.closeMessage = 'Nevermind';
+        $scope.showClose = true;
         $scope.submit = function() {
             $scope.showForm = false;
             $scope.showSuccess = true;
-            $scope.successMesage = 'Asking...';
-            var data = {
-                'title': $scope.question,
-                'status': 'publish',
-                'type': 'happiness'
-            };
-            QuestionService.GetLogin.save(data,
-                function(s) {
-                    if(s.error) {
-                        $scope.showForm = true;
-                        $scope.showSuccess = false;
-                        $scope.showError = true;
-                        $scope.errorMessage = s.message;
-                    } else {
-                        $scope.successMesage = s.message;
-                    }
-                }
-            );
+            $scope.successMessage = 'Asking...';
+            $scope.showClose = false;
         }
     }
 ]);

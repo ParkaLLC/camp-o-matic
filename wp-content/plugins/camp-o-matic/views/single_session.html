@@ -1,6 +1,6 @@
 <div>
 
-    <div class='ng-modal' ng-show='modalShown'>
+    <div class='ng-modal' ng-show='modalShown' ng-controller="AskCtrl">
         <div class='ng-modal-overlay' ng-click='toggleModal()'></div>
         <div class='ng-modal-dialog' ng-style='dialogStyle'>
             <div class='ng-modal-dialog-content'>
@@ -9,8 +9,9 @@
                     <textarea name="question" ng-model="question" rows="5" style="width: 100%; height: 75px;" ></textarea>
                     <button class="btn btn-green ask-question">Ask it!</button>
                 </form>
+                <p ng-show="showSuccess" class="bg-success" style="padding: 5px;">{{successMessage}}</p>
             </div>
-            <p class='nevermind' ng-click='toggleModal()'>Nevermind</p>
+            <p class='nevermind' ng-click='toggleModal()' ng-show="showClose">{{closeMessage}}</p>
         </div>
     </div>
 

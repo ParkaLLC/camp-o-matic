@@ -41,7 +41,7 @@ function campomatic_query_vars( $vars ) {
 add_filter('json_query_vars', 'campomatic_query_vars');
 
 /**
- * Adds meta to the wcb_session post type
+ * Adds meta to the wcb_session post type, and passes it along with the json response
  * @param $meta
  * @param $post_id
  */
@@ -63,6 +63,7 @@ function campomatic_session_meta( $_post, $post, $context ) {
 
     $speaker_id = get_post_meta( $_post['ID'], '_wcpt_speaker_id', true);
     $speaker_gravatar = get_post_meta( $speaker_id, '_wcb_speaker_email', true );
+    $session_version =  get_post_meta( $_post['ID'], '_campomatic_version', true);
 
     $speaker_number = count( $speaker_array );
 
@@ -79,6 +80,8 @@ function campomatic_session_meta( $_post, $post, $context ) {
 
     if( !empty($speaker_meta))
         $_post['meta']['speaker'] = rtrim( $speaker_meta, ',');
+
+    $_post['meta']['version'] = $session_version;
 
     return $_post;
 }
