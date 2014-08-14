@@ -46,11 +46,8 @@ get_currentuserinfo();
 	</div>
     <div id="sub-header-bar" ng-show="showSubHeader">
         <div class="container">
-            <div id="sub-header-content-left" class="col-md-6">
-                <p>Howdy <?php echo $current_user->display_name; ?></p>
-            </div>
-            <div id="sub-header-content-right" class="col-md-6">
-                <a href="<?php echo wp_logout_url( CAMPOMATIC_URL ); ?>">Log out</a>
+            <div id="sub-header-content" class="col-md-12">
+                <span>Howdy <?php echo $current_user->display_name; ?></span> <span class="log-out"><a href="<?php echo wp_logout_url( CAMPOMATIC_URL ); ?>">Log out</a></span>
             </div>
         </div>
     </div>

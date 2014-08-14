@@ -112,8 +112,8 @@ button.btn.btn-green.ask-question {
     margin: 0;
 }
 
-#sub-header-content-right {
-    text-align: right;
+.log-out {
+    float: right;
 }
 
 /*Session List*/
@@ -168,6 +168,7 @@ button.btn.btn-green.ask-question {
     border-top: 1px solid #f4f4f4;
     padding-top: 20px;
     margin-top: 20px;
+    clear: both;
 }
 
 #session-content {
