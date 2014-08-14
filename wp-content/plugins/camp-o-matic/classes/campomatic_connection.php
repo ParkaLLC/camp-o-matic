@@ -75,11 +75,13 @@ class Campomatic_Connection {
         }
 
         global $current_user;
+        $twitter = get_user_meta($current_user->ID, '_campomatic_twitter', true);
         $result = array(
             'error'=>false,
             'message'=> array(
                 'ID'=>$current_user-ID,
                 'display_name'=> $current_user->display_name,
+                'twitter'=> $twitter,
             ),
         );
         $response->set_data($result);

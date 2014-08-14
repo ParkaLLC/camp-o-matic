@@ -67,6 +67,7 @@ campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
                     $scope.showMain = true;
                     $scope.user = s.message;
                     $scope.showSubHeader = true;
+                    console.log($scope.user);
                     return true;
                 }
             });
@@ -95,17 +96,23 @@ campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     }
 ]);
 
+
 /*
 Single Session Controller
  */
 campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams', '$resource', '$interval', '$http', 'QuestionService',
     function($scope, SessionService, $routeParams, $resource, $interval, $http, QuestionService) {
         $scope.Auth();
+        $scope.Questions = {};
+        $scope.refreshQuestions = function() {
+            $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id });
+        };
+
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
             function() {
                 // we will initiate the heartbeat once we have information about the session
                 $scope.version = $scope.SessionsSingle.meta.version;
-                $scope.Questions = QuestionService.QuestionList.query();
+                $scope.refreshQuestions();
                 var heartbeatURL = "/wp-content/uploads/campomatic-hb/" + $scope.SessionsSingle.ID + ".txt";
 
                 var heartbeat = $interval(
@@ -129,6 +136,7 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
 ]);
 
 
+
 /*
  Register Controller
  */
@@ -140,6 +148,7 @@ campomaticControllers.controller('RegisterCtrl', ['$scope', 'UserService',
         $scope.showError = false;
         $scope.errorMessage = '';
         $scope.successMesage = '';
+
         $scope.submit = function() {
             $scope.showForm = false;
             $scope.showSuccess = true;
@@ -223,6 +232,7 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
                     $scope.successMessage = "Boom! Question asked.";
                     $scope.showClose = true;
                     $scope.closeMessage = 'Done';
+                    $scope.refreshQuestions();
                 }
             );
         }
@@ -284,7 +294,7 @@ campomaticServices.factory('QuestionService', ['$resource',
     function($resource){
         return {
             QuestionList : $resource('/wp-json/posts?type=happiness&_wp_json_nonce=' + nonce  +
-            '&filter[posts_per_page]=-1'),
+            '&filter[posts_per_page]=-1&filter[meta_key]=_campomatic_session_id&filter[meta_value]=:session_id'),
             AddQuestion : $resource('/wp-json/campomatic/ask',{_wp_json_nonce : nonce})
         };
     }
