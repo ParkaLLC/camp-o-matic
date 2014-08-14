@@ -13,10 +13,13 @@
  * @return void
  */
 function campomatic_endpoint_registrar() {
-    global $campomatic_connection;
+    global $campomatic_connection, $campomatic_question;
     require('classes/campomatic_connection.php');
+    require('classes/campomatic_question.php');
     $campomatic_connection = new Campomatic_Connection();
+    $campomatic_question = new Campomatic_Question();
     add_filter( 'json_endpoints', array( $campomatic_connection, 'register_routes' ) );
+    add_filter( 'json_endpoints', array( $campomatic_question, 'register_routes' ) );
 }
 add_action( 'wp_json_server_before_serve', 'campomatic_endpoint_registrar' );
 

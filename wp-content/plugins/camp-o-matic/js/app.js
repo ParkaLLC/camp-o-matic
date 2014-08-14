@@ -213,16 +213,27 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'AskService',
             $scope.successMessage = 'Asking...';
             $scope.showClose = false;
             var data = {
-                'title': '',
-                'content_raw': $scope.question,
-                'type': 'happiness',
-                'status': 'publish'
+                'question': $scope.question,
+                'session_id': $scope.SessionsSingle.ID
             };
             AskService.AddQuestion.save(data,
                 function(s) {
-                    $scope.successMessage = "Boom! Question asked.";
-                    $scope.showClose = true;
-                    $scope.closeMessage = 'Done';
+                    console.log(s);
+                    if(s.error) {
+                        $scope.showForm = true;
+                        $scope.showSuccess = false;
+                        $scope.showError = true;
+                        $scope.errorMessage = s.message;
+                        $scope.closeMessage = 'Nevermind';
+                        $scope.showClose = true;
+                    } else {
+                        $scope.showForm = false;
+                        $scope.showSuccess = true;
+                        $scope.showError = false;
+                        $scope.successMessage = s.message;
+                        $scope.closeMessage = "I'm done here";
+                        $scope.showClose = true;
+                    }
                 }
             );
         }
@@ -262,7 +273,7 @@ var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 campomaticServices.factory('AskService', ['$resource',
     function($resource){
         return {
-            AddQuestion : $resource('/wp-json/posts',{_wp_json_nonce : nonce})
+            AddQuestion : $resource('/wp-json/campomatic/ask',{_wp_json_nonce : nonce})
         };
     }
 ]);
