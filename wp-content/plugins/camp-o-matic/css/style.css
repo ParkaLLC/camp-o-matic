@@ -99,6 +99,23 @@ button.btn.btn-green.ask-question {
     border: 1px solid #fff !important;
 }
 
+/*Sub Header*/
+
+#sub-header-bar {
+    width: 100%;
+    overflow: hidden;
+    padding: 5px 0;
+    background-color: #444;
+}
+
+#sub-header-bar p {
+    margin: 0;
+}
+
+#sub-header-content-right {
+    text-align: right;
+}
+
 /*Session List*/
 
 #session_header {

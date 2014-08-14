@@ -1,6 +1,8 @@
 <?php
 $site_title = get_bloginfo( 'name' );
 $home_url = get_home_url();
+global $current_user;
+get_currentuserinfo();
 ?><!DOCTYPE html>
 <html lang="en" ng-app="campomatic">
 <head>
@@ -42,6 +44,16 @@ $home_url = get_home_url();
 			</nav>
 		</div>
 	</div>
+    <div id="sub-header-bar">
+        <div class="container">
+            <div id="sub-header-content-left" class="col-md-6">
+                <p>Currently logged in as: <?php echo $current_user->display_name . ', ' . $current_user->user_email; ?></p>
+            </div>
+            <div id="sub-header-content-right" class="col-md-6">
+                <a href="http://#">Log out</a>
+            </div>
+        </div>
+    </div>
 </div><!-- End Global header-->
 <div id="mainView" class="container" ng-view ng-show="showMain">
 	<p>oh hai</p>

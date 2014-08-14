@@ -31,25 +31,12 @@
     </div>
     <div id="session-content">
         <h4>Questions</h4>
-        <ul>
-            <li ng-repeat="question in Questions">
-                hello
-            </li>
-        </ul>
-
 
         <ul id="questions_list">
-            <li class="question">
+            <li ng-repeat="question in Questions" class="question">
                 <div class="upvote col-md-2"><i class="fa fa-heart"></i></div>
                 <div class="question_title col-md-10">
-                    <h4>What is the meaning of life?</h4>
-                    <p class="question-author">- @LarryBird</p>
-                </div>
-            </li>
-            <li class="question">
-                <div class="upvote col-md-2"><i class="fa fa-heart"></i></div>
-                <div class="question_title col-md-10">
-                    <h4>How much wood would a woodchuck chuck, if a woodchuck could chuck wood?</h4>
+                    <h4 ng-bind-html="question.content"></h4>
                     <p class="question-author">- @LarryBird</p>
                 </div>
             </li>
