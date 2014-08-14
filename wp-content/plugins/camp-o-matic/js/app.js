@@ -194,12 +194,11 @@ campomaticControllers.controller('LoginCtrl', ['$scope', 'UserService',
     }
 ]);
 
-
 /*
 Ask Controller
  */
-campomaticControllers.controller('AskCtrl', ['$scope', 'AskService',
-    function($scope, AskService) {
+campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
+    function($scope, QuestionService ) {
         $scope.showForm = true;
         $scope.showSuccess = false;
         $scope.showError = false;
@@ -213,12 +212,10 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'AskService',
             $scope.successMessage = 'Asking...';
             $scope.showClose = false;
             var data = {
-                'title': '',
-                'content_raw': $scope.question,
-                'type': 'happiness',
-                'status': 'publish'
+                'question': $scope.question,
+                'session_id' : $scope.SessionsSingle.ID
             };
-            AskService.AddQuestion.save(data,
+            QuestionService.AddQuestion.save(data,
                 function(s) {
                     $scope.successMessage = "Boom! Question asked.";
                     $scope.showClose = true;
@@ -258,15 +255,6 @@ campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'U
 
 var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 
-//Ask factory
-campomaticServices.factory('AskService', ['$resource',
-    function($resource){
-        return {
-            AddQuestion : $resource('/wp-json/posts',{_wp_json_nonce : nonce})
-        };
-    }
-]);
-
 
 campomaticServices.factory('UserService', ['$resource', '$cookies',
     function($resource, $cookies){
@@ -293,7 +281,8 @@ campomaticServices.factory('QuestionService', ['$resource',
     function($resource){
         return {
             QuestionList : $resource('/wp-json/posts?type=happiness&_wp_json_nonce=' + nonce  +
-            '&filter[posts_per_page]=-1')
+            '&filter[posts_per_page]=-1'),
+            AddQuestion : $resource('/wp-json/campomatic/ask',{_wp_json_nonce : nonce})
         };
     }
 ]);
