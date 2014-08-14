@@ -51,7 +51,7 @@ class Campomatic_Question {
         }
 
         update_post_meta( $post_id, '_campomatic_session_id', $data['session_id']);
-
+        campomatic_update_heartbeat( $post_id );
         $result = array(
             'error'=>false,
             'message'=> 'Boom! Question asked.',
