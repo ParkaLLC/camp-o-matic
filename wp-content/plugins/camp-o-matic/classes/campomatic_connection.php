@@ -47,7 +47,7 @@ class Campomatic_Connection {
             return $response;
         }
 
-        $key = get_user_meta($user->ID, '_campomatic_access_key' );
+        $key = get_user_meta($user->ID, '_campomatic_access_key', true );
         $access_url = CAMPOMATIC_URL . 'connect/' . $key;
         $message = "You can click the following link anytime you want to login to camp-o-matic: \n" . $access_url;
         $subject = 'Camp-o-matic: ' . get_bloginfo( 'name' ) . ' Login Link';

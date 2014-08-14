@@ -2,14 +2,14 @@
     <tr class="table-head">
         <td class="col-md-2"><h4>Time</h4></td>
         <td class="col-md-7"><h4>Title</h4></td>
-        <td class="col-md-2"><h4>Speaker</h4></td>
-        <td class="col-md-1"></td>
+        <td class="col-md-2 hidden-xs"><h4>Speaker</h4></td>
+        <td class="col-md-1 hidden-xs"></td>
     </tr>
     <tr ng-repeat="session in Sessions">
         <td><p class="time" ng-bind-html="session.meta.time"></p><p><a class="btn button-blue" ng-href="#/session/{{session.ID}}">Visit Session</a></p></td>
-        <td><a class="title" ng-href="#/session/{{session.ID}}" ng-bind-html="session.title"></a><span ng-bind-html="session.excerpt"></span></td>
-        <td><p><a ng-bind-html="session.meta.speaker" ng-href="/speaker/{{session.meta.speaker_slug}}"></a></p></td>
-        <td><a ng-href="/speaker/{{session.meta.speaker_slug}}"><img class="round" src="http://www.gravatar.com/avatar/{{session.meta.speaker_grav}}" width="76" height="76"></a></td>
+        <td><a class="title" ng-href="#/session/{{session.ID}}" ng-bind-html="session.title"></a><span ng-bind-html="session.excerpt" class="hidden-xs"></span></td>
+        <td class="hidden-xs"><p><a ng-bind-html="session.meta.speaker" ng-href="/speaker/{{session.meta.speaker_slug}}"></a></p></td>
+        <td class="hidden-xs"><a ng-href="/speaker/{{session.meta.speaker_slug}}"><img class="round" src="http://www.gravatar.com/avatar/{{session.meta.speaker_grav}}" width="76" height="76"></a></td>
     </tr>
 </table>
 
