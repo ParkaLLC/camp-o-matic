@@ -96,13 +96,29 @@ campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
 /*
 Single Session Controller
  */
-campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams',
-    function($scope, SessionService, $routeParams) {
+campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams', '$resource', '$interval', '$http',
+    function($scope, SessionService, $routeParams, $resource, $interval, $http) {
         $scope.Auth();
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
             function() {
                 // we will initiate the heartbeat once we have information about the session
-                console.log( $scope.SessionsSingle.meta.version );
+                $scope.version = $scope.SessionsSingle.meta.version;
+                var heartbeatURL = "/wp-content/uploads/campomatic-hb/" + $scope.SessionsSingle.ID + ".txt";
+
+                var heartbeat = $interval(
+                    function() {
+                        $http.get(heartbeatURL).success(
+                            function(data) {
+                                if( data != $scope.version ) {
+                                    console.log('update needed!!');
+                                } else {
+                                    console.log('everything is static');
+                                }
+                            }
+                        );
+                    },
+                    5000
+                );
             }
         );
 
