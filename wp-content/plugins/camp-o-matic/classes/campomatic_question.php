@@ -34,7 +34,7 @@ class Campomatic_Question {
 
         $post_args = array(
             'post_type'=>'happiness',
-            'post_content'=>$data['question'],
+            'post_content'=> wp_strip_all_tags( $data['question'] ),
             'post_status'=>'publish',
         );
 
