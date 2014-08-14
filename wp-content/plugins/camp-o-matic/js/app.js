@@ -92,17 +92,17 @@ campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
     }
 ]);
 
-
 /*
 Single Session Controller
  */
-campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams', '$resource', '$interval', '$http',
-    function($scope, SessionService, $routeParams, $resource, $interval, $http) {
+campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams', '$resource', '$interval', '$http', 'QuestionService',
+    function($scope, SessionService, $routeParams, $resource, $interval, $http, QuestionService) {
         $scope.Auth();
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
             function() {
                 // we will initiate the heartbeat once we have information about the session
                 $scope.version = $scope.SessionsSingle.meta.version;
+                $scope.Questions = QuestionService.QuestionList.query();
                 var heartbeatURL = "/wp-content/uploads/campomatic-hb/" + $scope.SessionsSingle.ID + ".txt";
 
                 var heartbeat = $interval(
@@ -285,6 +285,15 @@ campomaticServices.factory('SessionService', ['$resource',
         return {
             SessionList : $resource('/wp-json/posts?type=wcb_session&_wp_json_nonce=' + nonce  + '&filter[posts_per_page]=-1&filter[orderby]=meta_value_num&filter[meta_key]=_wcpt_session_time&filter[meta_query][0][key]=_wcpt_session_type&filter[meta_query][0][value]=session'),
             SingleSession : $resource('/wp-json/posts/:session_id',{_wp_json_nonce : nonce})
+        };
+    }
+]);
+
+campomaticServices.factory('QuestionService', ['$resource',
+    function($resource){
+        return {
+            QuestionList : $resource('/wp-json/posts?type=happiness&_wp_json_nonce=' + nonce  +
+            '&filter[posts_per_page]=-1')
         };
     }
 ]);
