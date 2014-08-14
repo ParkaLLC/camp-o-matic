@@ -99,8 +99,13 @@ Single Session Controller
 campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams',
     function($scope, SessionService, $routeParams) {
         $scope.Auth();
-        $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id });
-        console.log( $scope.SessionsSingle );
+        $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
+            function() {
+                // we will initiate the heartbeat once we have information about the session
+                console.log( $scope.SessionsSingle.meta.version );
+            }
+        );
+
     }
 ]);
 
