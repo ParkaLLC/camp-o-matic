@@ -64,6 +64,8 @@ campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
                 } else {
                     $scope.showLoading = false;
                     $scope.showMain = true;
+                    $scope.user = s.message;
+                    console.log( $scope.user );
                     return true;
                 }
             });

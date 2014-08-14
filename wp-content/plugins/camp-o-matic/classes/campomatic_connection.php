@@ -77,7 +77,10 @@ class Campomatic_Connection {
         global $current_user;
         $result = array(
             'error'=>false,
-            'message'=>'we in',
+            'message'=> array(
+                'ID'=>$current_user-ID,
+                'display_name'=> $current_user->display_name,
+            ),
         );
         $response->set_data($result);
 
@@ -170,6 +173,7 @@ class Campomatic_Connection {
         }
 
         $access_key = wp_generate_password(20, false);
+        wp_update_user( array( 'ID'=>$user_id, 'display_name'=>$data['name']));
         update_user_meta($user_id, '_campomatic_access_key', $access_key );
         $twitter = ltrim( $data['twitter'], '@');
         update_user_meta( $user_id, '_campomatic_twitter', $data['twitter'] );
