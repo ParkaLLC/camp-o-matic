@@ -177,34 +177,20 @@ campomaticControllers.controller('LoginCtrl', ['$scope', 'UserService',
 /*
 Ask Controller
  */
-campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
-    function($scope, QuestionService) {
+campomaticControllers.controller('AskCtrl', ['$scope',
+    function($scope) {
         $scope.showForm = true;
         $scope.showSuccess = false;
         $scope.showError = false;
         $scope.errorMessage = '';
-        $scope.successMesage = '';
+        $scope.successMessage = '';
+        $scope.closeMessage = 'Nevermind';
+        $scope.showClose = true;
         $scope.submit = function() {
             $scope.showForm = false;
             $scope.showSuccess = true;
-            $scope.successMesage = 'Asking...';
-            var data = {
-                'title': $scope.question,
-                'status': 'publish',
-                'type': 'happiness'
-            };
-            QuestionService.GetLogin.save(data,
-                function(s) {
-                    if(s.error) {
-                        $scope.showForm = true;
-                        $scope.showSuccess = false;
-                        $scope.showError = true;
-                        $scope.errorMessage = s.message;
-                    } else {
-                        $scope.successMesage = s.message;
-                    }
-                }
-            );
+            $scope.successMessage = 'Asking...';
+            $scope.showClose = false;
         }
     }
 ]);
