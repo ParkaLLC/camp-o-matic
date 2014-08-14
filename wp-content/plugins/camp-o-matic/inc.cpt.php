@@ -22,7 +22,7 @@ function com_happiness_register_cpt() {
         'label'               => __( 'happiness', 'campomatic' ),
         'description'         => __( 'HB Question', 'campomatic' ),
         'labels'              => $labels,
-        'supports'            => array( 'title', 'editor', ),
+        'supports'            => array( 'title', 'editor', 'author' ),
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,

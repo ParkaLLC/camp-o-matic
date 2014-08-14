@@ -182,8 +182,8 @@ campomaticControllers.controller('LoginCtrl', ['$scope', 'UserService',
 /*
 Ask Controller
  */
-campomaticControllers.controller('AskCtrl', ['$scope',
-    function($scope) {
+campomaticControllers.controller('AskCtrl', ['$scope', 'AskService',
+    function($scope, AskService) {
         $scope.showForm = true;
         $scope.showSuccess = false;
         $scope.showError = false;
@@ -196,6 +196,19 @@ campomaticControllers.controller('AskCtrl', ['$scope',
             $scope.showSuccess = true;
             $scope.successMessage = 'Asking...';
             $scope.showClose = false;
+            var data = {
+                'title': '',
+                'content_raw': $scope.question,
+                'type': 'happiness',
+                'status': 'publish'
+            };
+            AskService.AddQuestion.save(data,
+                function(s) {
+                    $scope.successMessage = "Boom! Question asked.";
+                    $scope.showClose = true;
+                    $scope.closeMessage = 'Done';
+                }
+            );
         }
     }
 ]);
@@ -230,14 +243,10 @@ campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'U
 var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 
 //Ask factory
-campomaticServices.factory('AskCtrl', ['$resource',
+campomaticServices.factory('AskService', ['$resource',
     function($resource){
-
         return {
-            Register : $resource('/wp-json/campomatic/register'),
-            Login : $resource('/wp-json/campomatic/login'),
-            GetLogin : $resource('/wp-json/campomatic/get_login'),
-            Auth : $resource('/wp-json/campomatic/auth',{_wp_json_nonce : nonce})
+            AddQuestion : $resource('/wp-json/posts',{_wp_json_nonce : nonce})
         };
     }
 ]);
