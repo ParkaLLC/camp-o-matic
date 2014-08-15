@@ -48,6 +48,12 @@ class Campomatic_Connection {
         }
 
         $key = get_user_meta($user->ID, '_campomatic_access_key', true );
+
+        if( empty($key) ) {
+            $key =wp_generate_password(20, false);
+            update_user_meta($user->ID, '_campomatic_access_key', $key );
+        }
+
         $access_url = CAMPOMATIC_URL . 'connect/' . $key;
         $message = "You can click the following link anytime you want to login to camp-o-matic: \n" . $access_url;
         $subject = 'Camp-o-matic: ' . get_bloginfo( 'name' ) . ' Login Link';
