@@ -106,6 +106,7 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
         $scope.Questions = {};
         $scope.refreshQuestions = function() {
             $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id });
+            console.log( $scope.Questions );
         };
 
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
@@ -242,29 +243,35 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
 campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'UserService',
     function($scope, $routeParams, UserService) {
 
-            $scope.connectionLoading = true;
-            $scope.showError = false;
-            $scope.showSuccess = false;
-            $scope.errorMessage = '';
-            $scope.successMesage = '';
-            UserService.Login.save( { key : $routeParams.connection_id },
-                function(s) {
-                    if(s.error ) {
-                        $scope.connectionLoading = false;
-                        $scope.showError = true;
-                        $scope.showSuccess = false;
-                        $scope.errorMessage = s.message;
-                    } else {
-                        $scope.connectionLoading = false;
-                        $scope.showError = false;
-                        $scope.showSuccess = true;
-                        $scope.successMesage = s.message;
-                        window.location = home_url + '/campomatic/';
-                    }
+        $scope.connectionLoading = true;
+        $scope.showError = false;
+        $scope.showSuccess = false;
+        $scope.errorMessage = '';
+        $scope.successMesage = '';
+        UserService.Login.save( { key : $routeParams.connection_id },
+            function(s) {
+                if(s.error ) {
+                    $scope.connectionLoading = false;
+                    $scope.showError = true;
+                    $scope.showSuccess = false;
+                    $scope.errorMessage = s.message;
+                } else {
+                    $scope.connectionLoading = false;
+                    $scope.showError = false;
+                    $scope.showSuccess = true;
+                    $scope.successMesage = s.message;
+                    window.location = home_url + '/campomatic/';
                 }
-            );
+            }
+        );
     }
 ]);
+
+campomaticControllers.controller('QuestionCtrl',
+    function($scope ) {
+
+    }
+);
 
 var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 

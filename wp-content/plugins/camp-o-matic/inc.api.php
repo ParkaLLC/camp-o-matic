@@ -44,49 +44,66 @@ function campomatic_query_vars( $vars ) {
 add_filter('json_query_vars', 'campomatic_query_vars');
 
 /**
- * Adds meta to the wcb_session post type, and passes it along with the json response
+ * Adds meta to the wcb_session and happiness post types, and passes it along with the json response
  * @param $meta
  * @param $post_id
  */
 function campomatic_session_meta( $_post, $post, $context ) {
 
-    if( $_post['type'] != 'wcb_session')
+    $campomatic_filters = array( 'wcb_session', 'happiness');
+
+    if( !in_array( $_post['type'], $campomatic_filters ) )
         return $_post;
 
     if( $context != 'view' )
         return $_post;
 
-    $time_meta = get_post_meta( $_post['ID'], '_wcpt_session_time', true );
-    if( !empty($time_meta) )
-        $_post['meta']['time'] = date('D, g:i a', $time_meta);
-
-    $speaker_meta = get_post_meta( $_post['ID'], '_wcb_session_speakers', true);
-    $speaker_meta = rtrim( $speaker_meta, ',');
-    $speaker_array = explode(",", $speaker_meta);
-
-    $speaker_id = get_post_meta( $_post['ID'], '_wcpt_speaker_id', true);
-    $speaker_gravatar = get_post_meta( $speaker_id, '_wcb_speaker_email', true );
-    $session_version =  get_post_meta( $_post['ID'], '_campomatic_version', true);
-
-    $speaker_number = count( $speaker_array );
-
-    $speaker = get_post( $speaker_id );
-
-    if( !empty( $speaker ) )
-        $_post['meta']['speaker_slug'] = $speaker->post_name;
-
-    if ( !empty( $speaker_gravatar ) && $speaker_number === 1  ) {
-        $_post['meta']['speaker_grav'] = md5( strtolower( trim( $speaker_gravatar) ) );
-    } else {
-        $_post['meta']['speaker_grav'] = '';
+    if( $_post['type'] == 'happiness' ) {
+        $asker = get_user_by( 'id', $_post['author']);
+        $twitter = get_user_meta( $asker->ID, '_campomatic_twitter', true);
+        if( empty($twitter) )
+            $handle = $asker->display_name;
+        else
+            $handle = '@'.$twitter;
+        $_post['meta']['author'] = $handle;
+        return $_post;
     }
 
-    if( !empty($speaker_meta))
-        $_post['meta']['speaker'] = rtrim( $speaker_meta, ',');
+    if( $_post['type'] == 'wcb_session' ) {
+        $time_meta = get_post_meta( $_post['ID'], '_wcpt_session_time', true );
+        if( !empty($time_meta) )
+            $_post['meta']['time'] = date('D, g:i a', $time_meta);
 
-    $_post['meta']['version'] = $session_version;
+        $speaker_meta = get_post_meta( $_post['ID'], '_wcb_session_speakers', true);
+        $speaker_meta = rtrim( $speaker_meta, ',');
+        $speaker_array = explode(",", $speaker_meta);
 
-    return $_post;
+        $speaker_id = get_post_meta( $_post['ID'], '_wcpt_speaker_id', true);
+        $speaker_gravatar = get_post_meta( $speaker_id, '_wcb_speaker_email', true );
+        $session_version =  get_post_meta( $_post['ID'], '_campomatic_version', true);
+
+        $speaker_number = count( $speaker_array );
+
+        $speaker = get_post( $speaker_id );
+
+        if( !empty( $speaker ) )
+            $_post['meta']['speaker_slug'] = $speaker->post_name;
+
+        if ( !empty( $speaker_gravatar ) && $speaker_number === 1  ) {
+            $_post['meta']['speaker_grav'] = md5( strtolower( trim( $speaker_gravatar) ) );
+        } else {
+            $_post['meta']['speaker_grav'] = '';
+        }
+
+        if( !empty($speaker_meta))
+            $_post['meta']['speaker'] = rtrim( $speaker_meta, ',');
+
+        $_post['meta']['version'] = $session_version;
+
+        return $_post;
+    }
+
+
 }
 add_filter('json_prepare_post', 'campomatic_session_meta', 10, 3);
 
