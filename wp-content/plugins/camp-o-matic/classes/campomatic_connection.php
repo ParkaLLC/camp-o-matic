@@ -82,12 +82,16 @@ class Campomatic_Connection {
 
         global $current_user;
         $twitter = get_user_meta($current_user->ID, '_campomatic_twitter', true);
+        $is_admin = false;
+        if( current_user_can('activate_plugins') )
+            $is_admin = true;
         $result = array(
             'error'=>false,
             'message'=> array(
-                'ID'=>$current_user-ID,
+                'ID'=>$current_user->ID,
                 'display_name'=> $current_user->display_name,
                 'twitter'=> $twitter,
+                'is_admin'=> $is_admin,
             ),
         );
         $response->set_data($result);

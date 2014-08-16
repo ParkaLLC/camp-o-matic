@@ -338,6 +338,10 @@ input#get-login-link {
     width: 50px;
 }
 
+.pointer {
+    cursor: pointer !important;
+}
+
 
 
 /* #Media Queries

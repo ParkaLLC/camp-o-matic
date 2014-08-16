@@ -67,7 +67,6 @@ campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
                     $scope.showMain = true;
                     $scope.user = s.message;
                     $scope.showSubHeader = true;
-                    console.log($scope.user);
                     return true;
                 }
             });
@@ -106,7 +105,6 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
         $scope.Questions = {};
         $scope.refreshQuestions = function() {
             $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id });
-            console.log( $scope.Questions );
         };
 
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
@@ -269,7 +267,16 @@ campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'U
 
 campomaticControllers.controller('QuestionCtrl',
     function($scope ) {
+        $scope.showRemoveButton = function() {
+            if( $scope.user.is_admin ) {
+                return true;
+            }
 
+            if( $scope.question.author.ID == $scope.user.ID ) {
+                return true;
+            }
+            return false;
+        }
     }
 );
 
