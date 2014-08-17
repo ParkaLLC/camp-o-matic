@@ -265,8 +265,21 @@ campomaticControllers.controller('ConnectionCtrl', ['$scope', '$routeParams', 'U
     }
 ]);
 
-campomaticControllers.controller('QuestionCtrl',
-    function($scope ) {
+campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
+    function( $scope, QuestionService ) {
+
+        $scope.removeQuestion = function() {
+            QuestionService.SingleQuestion.remove({ question_id  : $scope.question.ID },
+                function(s) {
+                    if(s.error) {
+                        alert(s.message);
+                    } else {
+                        $scope.Questions = $scope.refreshQuestions()
+                    }
+                }
+            );
+        };
+
         $scope.showRemoveButton = function() {
             if( $scope.user.is_admin ) {
                 return true;
@@ -278,7 +291,7 @@ campomaticControllers.controller('QuestionCtrl',
             return false;
         }
     }
-);
+]);
 
 var campomaticServices = angular.module('campomaticServices', ['ngResource']);
 
@@ -298,7 +311,9 @@ campomaticServices.factory('UserService', ['$resource', '$cookies',
 campomaticServices.factory('SessionService', ['$resource',
     function($resource){
         return {
-            SessionList : $resource('/wp-json/posts?type=wcb_session&_wp_json_nonce=' + nonce  + '&filter[posts_per_page]=-1&filter[orderby]=meta_value_num&filter[meta_key]=_wcpt_session_time&filter[meta_query][0][key]=_wcpt_session_type&filter[meta_query][0][value]=session'),
+            SessionList : $resource('/wp-json/posts?type=wcb_session&_wp_json_nonce=' + nonce  +
+            '&filter[posts_per_page]=-1&filter[orderby]=meta_value_num&filter[meta_key]=_wcpt_session_time' +
+            '&filter[meta_query][0][key]=_wcpt_session_type&filter[meta_query][0][value]=session'),
             SingleSession : $resource('/wp-json/posts/:session_id',{_wp_json_nonce : nonce})
         };
     }
@@ -309,7 +324,8 @@ campomaticServices.factory('QuestionService', ['$resource',
         return {
             QuestionList : $resource('/wp-json/posts?type=happiness&_wp_json_nonce=' + nonce  +
             '&filter[posts_per_page]=-1&filter[meta_key]=_campomatic_session_id&filter[meta_value]=:session_id'),
-            AddQuestion : $resource('/wp-json/campomatic/ask',{_wp_json_nonce : nonce})
+            AddQuestion : $resource('/wp-json/campomatic/ask',{_wp_json_nonce : nonce}),
+            SingleQuestion : $resource('/wp-json/campomatic/question/:question_id',{_wp_json_nonce : nonce})
         };
     }
 ]);

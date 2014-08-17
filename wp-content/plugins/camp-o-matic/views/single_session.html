@@ -39,7 +39,7 @@
                     <h4 ng-bind-html="question.content"></h4>
                     <p class="question-author">
                         - {{question.meta.author}}
-                        <a class="remove pointer" ng-show="showRemoveButton()">Remove Question</a>
+                        <a class="remove pointer" ng-show="showRemoveButton()" ng-click="removeQuestion()">Remove Question</a>
                     </p>
                 </div>
             </li>

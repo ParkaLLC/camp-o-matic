@@ -7,13 +7,48 @@ class Campomatic_Question {
         $routes['/campomatic/ask'] = array(
             array( array( $this, 'publish_question'), WP_JSON_Server::CREATABLE | WP_JSON_Server::ACCEPT_JSON ),
         );
+        $routes['/campomatic/question/(?P<id>\d+)'] = array(
+            array( array( $this, 'delete_question'), WP_JSON_Server::DELETABLE | WP_JSON_Server::ACCEPT_JSON ),
+        );
 
         return $routes;
     }
 
+    public function delete_question( $id ) {
+        $response = new WP_JSON_Response();
+
+        if( !current_user_can('edit_post', $id) ) {
+            $result = array(
+                'error'=>true,
+                'message'=>'You are not authorized to delete this question.',
+            );
+            $response->set_data($result);
+            return $response;
+        }
+
+        $force = false;
+        $deleted = wp_delete_post( $id, $force );
+
+        if ( ! $deleted ) {
+            $result = array(
+                'error'=>true,
+                'message'=>'This question cannot be deleted.',
+            );
+            $response->set_data($result);
+            return $response;
+        }
+
+        $result = array(
+            'error'=>false,
+            'message'=>'Deleted!',
+        );
+
+        $response->set_data( $result );
+        return $response;
+    }
+
     public function publish_question($data) {
         $response = new WP_JSON_Response();
-        error_log( print_r($data, true), 1, 'rocco@hcg.bz');
         if( !is_user_logged_in() ) {
             $result = array(
                 'error'=>true,
