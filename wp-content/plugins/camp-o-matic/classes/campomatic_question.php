@@ -3,6 +3,7 @@
  * Class Campomatic_Connection logs a user in creating a new connection to the Campomatic app
  */
 class Campomatic_Question {
+
     public function register_routes( $routes ) {
         $routes['/campomatic/ask'] = array(
             array( array( $this, 'publish_question'), WP_JSON_Server::CREATABLE | WP_JSON_Server::ACCEPT_JSON ),
@@ -15,6 +16,7 @@ class Campomatic_Question {
     }
 
     public function delete_question( $id ) {
+
         $response = new WP_JSON_Response();
 
         if( !current_user_can('edit_post', $id) ) {
@@ -25,9 +27,7 @@ class Campomatic_Question {
             $response->set_data($result);
             return $response;
         }
-
-        $force = false;
-        $deleted = wp_delete_post( $id, $force );
+        $deleted = wp_trash_post( $id );
 
         if ( ! $deleted ) {
             $result = array(
@@ -89,7 +89,7 @@ class Campomatic_Question {
         campomatic_update_heartbeat( $post_id );
         $result = array(
             'error'=>false,
-            'message'=> 'Boom! Question asked.',
+            'message'=> 'Boom! Question asked. Ask another?',
         );
         $response->set_data($result);
         return $response;

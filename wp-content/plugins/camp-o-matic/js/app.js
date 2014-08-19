@@ -228,10 +228,16 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
             };
             QuestionService.AddQuestion.save(data,
                 function(s) {
-                    $scope.successMessage = "Boom! Question asked.";
-                    $scope.showClose = true;
-                    $scope.closeMessage = 'Done';
-                    $scope.refreshQuestions();
+                    if(s.error) {
+                        alert(s.message);
+                    } else {
+                        $scope.successMessage = s.message;
+                        $scope.showClose = true;
+                        $scope.closeMessage = 'Done';
+                        $scope.showForm = true;
+                        $scope.question = '';
+                        $scope.refreshQuestions();
+                    }
                 }
             );
         }
@@ -272,6 +278,8 @@ campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
             QuestionService.SingleQuestion.remove({ question_id  : $scope.question.ID },
                 function(s) {
                     if(s.error) {
+                        console.log( $scope.user );
+                        console.log( $scope.question );
                         alert(s.message);
                     } else {
                         $scope.Questions = $scope.refreshQuestions()
