@@ -102,6 +102,7 @@ Single Session Controller
 campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams', '$resource', '$interval', '$http', 'QuestionService',
     function($scope, SessionService, $routeParams, $resource, $interval, $http, QuestionService) {
         $scope.Auth();
+        $scope.questionOrder = 'total_votes';
         $scope.Questions = {};
         $scope.refreshQuestions = function() {
             $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id });
