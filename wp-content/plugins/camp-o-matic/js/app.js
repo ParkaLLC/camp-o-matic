@@ -106,25 +106,26 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
         $scope.Questions = {};
         $scope.refreshQuestions = function() {
             $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id });
-            console.log( $scope.Questions );
         };
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
             function() {
                 // we will initiate the heartbeat once we have information about the session
                 $scope.version = $scope.SessionsSingle.meta.version;
+                console.log( $scope.version );
                 $scope.refreshQuestions();
                 var heartbeatURL = "/wp-content/uploads/campomatic-hb/" + $scope.SessionsSingle.ID + ".txt";
-
-                var heartbeat = $interval(
+                console.log( heartbeatURL );
+               var heartbeat = $interval(
                     function() {
-                        $http.get(heartbeatURL).success(
+                        $http.get(heartbeatURL, {'foobar': new Date().getTime()}).success(
                             function(data) {
-                                if( data != $scope.version ) {
+                                console.log( data );
+                                /*if( data != $scope.version ) {
                                     console.log('update needed!!');
                                     $scope.version = data;
                                 } else {
                                     console.log('everything is static');
-                                }
+                                }*/
                             }
                         );
                     },

@@ -122,6 +122,7 @@ function campomatic_update_heartbeat( $post_id ) {
     $version_heartbeat_file = HEARTBEAT_DIR . $post_id . '.txt';
     $handle = fopen($version_heartbeat_file, 'w');
     fwrite( $handle, $version );
+    fclose($handle);
 }
 
 function campomatic_session_publish( $ID, $post ) {
