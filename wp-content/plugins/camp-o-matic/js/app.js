@@ -102,7 +102,7 @@ Single Session Controller
 campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams', '$resource', '$interval', '$http', 'QuestionService',
     function($scope, SessionService, $routeParams, $resource, $interval, $http, QuestionService) {
         $scope.Auth();
-        $scope.questionOrder = 'total_votes';
+        $scope.questionOrder = 'meta.total_votes';
         $scope.Questions = {};
         $scope.refreshQuestions = function() {
             $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id });
@@ -230,14 +230,15 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
             };
             QuestionService.AddQuestion.save(data,
                 function(s) {
+                    $scope.showClose = true;
+                    $scope.closeMessage = 'Done';
+                    $scope.showForm = true;
+                    $scope.question = '';
                     if(s.error) {
+                        $scope.showSuccess = false;
                         alert(s.message);
                     } else {
                         $scope.successMessage = s.message;
-                        $scope.showClose = true;
-                        $scope.closeMessage = 'Done';
-                        $scope.showForm = true;
-                        $scope.question = '';
                         $scope.refreshQuestions();
                     }
                 }

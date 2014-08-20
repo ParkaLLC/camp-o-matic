@@ -73,7 +73,7 @@ function campomatic_session_meta( $_post, $post, $context ) {
         $_post['meta']['votes'] = $votes;
 
         $num_votes = count($votes);
-        $_post['total_votes'] = $num_votes;
+        $_post['meta']['total_votes'] = $num_votes;
 
         return $_post;
     }

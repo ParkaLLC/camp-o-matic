@@ -20,7 +20,7 @@ class Campomatic_Question {
     public function upvote_question( $data ) {
 
         $response = new WP_JSON_Response();
-        $votes = get_post_meta( $data['id'], '_campomatic_votes', true);
+        $votes = get_post_meta( $data['ID'], '_campomatic_votes', true);
         if( $data['vote_direction'] == 'up') {
 
             if( empty( $votes ) ) {
@@ -42,7 +42,6 @@ class Campomatic_Question {
             }
 
         }
-
         update_post_meta( $data['ID'], '_campomatic_votes', $votes );
         $session_id = get_post_meta($data['id'], '_campomatic_session_id', true);
         campomatic_update_heartbeat($session_id);
