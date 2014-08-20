@@ -66,6 +66,12 @@ function campomatic_session_meta( $_post, $post, $context ) {
         else
             $handle = '@'.$twitter;
         $_post['meta']['author'] = $handle;
+
+        $votes = get_post_meta( $_post['ID'], '_campomatic_votes', true);
+        if( empty($votes))
+            $votes = array();
+        $_post['meta']['votes'] = $votes;
+
         return $_post;
     }
 

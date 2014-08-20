@@ -105,8 +105,8 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
         $scope.Questions = {};
         $scope.refreshQuestions = function() {
             $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id });
+            console.log( $scope.Questions );
         };
-
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
             function() {
                 // we will initiate the heartbeat once we have information about the session
@@ -296,22 +296,40 @@ campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
                 return true;
             }
             return false;
-        }
+        };
 
         $scope.iconClass = function() {
             var iconClass = "fa fa-heart";
+            if( $scope.question.meta.votes.indexOf($scope.user.ID) > -1 ) {
+                iconClass += " voted";
+            }
             return iconClass;
-        }
+        };
 
         $scope.upvote = function() {
+
+            var vote_direction = "up";
+            if( $scope.question.meta.votes.indexOf($scope.user.ID) > -1 ) {
+                vote_direction = "down";
+            }
+
             var data = {
                 "ID" : $scope.question.ID,
-                "vote_direction" : "up"
+                "vote_direction" : vote_direction,
+                "user" : $scope.user.ID,
             };
             QuestionService.Upvote.save( data, function(s) {
-                console.log(s);
+                $scope.Questions = $scope.refreshQuestions();
             } );
-        }
+        };
+
+        $scope.iconTitle = function() {
+            var title = "I need to know the answer to this question!!";
+            if( $scope.question.meta.votes.indexOf($scope.user.ID) > -1 ) {
+                title = "I changed my mind. This is a dumb question.";
+            }
+            return title;
+        };
     }
 ]);
 

@@ -272,6 +272,7 @@ button.btn.btn-green.ask-question {
     float: left;
     font-size: 3em;
     color: #ccc;
+    cursor: pointer;
 }
 
 #questions_list li.question .upvote:hover, #questions_list li.question .upvote .voted {

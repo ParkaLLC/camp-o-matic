@@ -18,9 +18,44 @@ class Campomatic_Question {
     }
 
     public function upvote_question( $data ) {
+
         $response = new WP_JSON_Response();
-        $response->set_data($data);
+        $votes = get_post_meta( $data['id'], '_campomatic_votes', true);
+        if( $data['vote_direction'] == 'up') {
+
+            if( empty( $votes ) ) {
+                $votes = array( $data['user'] );
+            } else {
+                $user_has_voted = array_search( $data['user'], $votes );
+                if( false === $user_has_voted )
+                    $votes[] = $data['user'];
+            }
+
+        }
+
+        if( $data['vote_direction'] == 'down') {
+
+            if( !empty( $votes ) ) {
+                $user_has_voted = array_search( $data['user'], $votes );
+                if( $user_has_voted !== false )
+                    unset( $votes[$user_has_voted] );
+            }
+
+        }
+
+        update_post_meta( $data['ID'], '_campomatic_votes', $votes );
+        $session_id = get_post_meta($data['id'], '_campomatic_session_id', true);
+        campomatic_update_heartbeat($session_id);
+
+        $result = array(
+            'error'=>false,
+            'message'=>'Question updated.',
+        );
+
+        $response->set_data($result);
+
         return $response;
+
     }
 
     public function delete_question( $id ) {
@@ -35,6 +70,7 @@ class Campomatic_Question {
             $response->set_data($result);
             return $response;
         }
+
         $question = get_post( $id );
         $session_id = get_post_meta($id, '_campomatic_session_id', true);
         campomatic_update_heartbeat($session_id);
