@@ -120,6 +120,7 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
                             function(data) {
                                 if( data != $scope.version ) {
                                     console.log('update needed!!');
+                                    $scope.version = data;
                                 } else {
                                     console.log('everything is static');
                                 }
@@ -278,8 +279,6 @@ campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
             QuestionService.SingleQuestion.remove({ question_id  : $scope.question.ID },
                 function(s) {
                     if(s.error) {
-                        console.log( $scope.user );
-                        console.log( $scope.question );
                         alert(s.message);
                     } else {
                         $scope.Questions = $scope.refreshQuestions()
@@ -297,6 +296,21 @@ campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
                 return true;
             }
             return false;
+        }
+
+        $scope.iconClass = function() {
+            var iconClass = "fa fa-heart";
+            return iconClass;
+        }
+
+        $scope.upvote = function() {
+            var data = {
+                "ID" : $scope.question.ID,
+                "vote_direction" : "up"
+            };
+            QuestionService.Upvote.save( data, function(s) {
+                console.log(s);
+            } );
         }
     }
 ]);
@@ -333,7 +347,8 @@ campomaticServices.factory('QuestionService', ['$resource',
             QuestionList : $resource('/wp-json/posts?type=happiness&_wp_json_nonce=' + nonce  +
             '&filter[posts_per_page]=-1&filter[meta_key]=_campomatic_session_id&filter[meta_value]=:session_id'),
             AddQuestion : $resource('/wp-json/campomatic/ask',{_wp_json_nonce : nonce}),
-            SingleQuestion : $resource('/wp-json/campomatic/question/:question_id',{_wp_json_nonce : nonce})
+            SingleQuestion : $resource('/wp-json/campomatic/question/:question_id',{_wp_json_nonce : nonce}),
+            Upvote : $resource('/wp-json/campomatic/upvote/',{_wp_json_nonce : nonce}),
         };
     }
 ]);

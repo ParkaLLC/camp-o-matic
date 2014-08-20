@@ -11,8 +11,16 @@ class Campomatic_Question {
         $routes['/campomatic/question/(?P<id>\d+)'] = array(
             array( array( $this, 'delete_question'), WP_JSON_Server::DELETABLE | WP_JSON_Server::ACCEPT_JSON ),
         );
-
+        $routes['/campomatic/upvote'] = array(
+            array( array( $this, 'upvote_question'), WP_JSON_Server::CREATABLE | WP_JSON_Server::ACCEPT_JSON ),
+        );
         return $routes;
+    }
+
+    public function upvote_question( $data ) {
+        $response = new WP_JSON_Response();
+        $response->set_data($data);
+        return $response;
     }
 
     public function delete_question( $id ) {
@@ -27,6 +35,9 @@ class Campomatic_Question {
             $response->set_data($result);
             return $response;
         }
+        $question = get_post( $id );
+        $session_id = get_post_meta($id, '_campomatic_session_id', true);
+        campomatic_update_heartbeat($session_id);
         $deleted = wp_trash_post( $id );
 
         if ( ! $deleted ) {
@@ -86,7 +97,7 @@ class Campomatic_Question {
         }
 
         update_post_meta( $post_id, '_campomatic_session_id', $data['session_id']);
-        campomatic_update_heartbeat( $post_id );
+        campomatic_update_heartbeat( $data['session_id'] );
         $result = array(
             'error'=>false,
             'message'=> 'Boom! Question asked. Ask another?',

@@ -274,7 +274,7 @@ button.btn.btn-green.ask-question {
     color: #ccc;
 }
 
-#questions_list li.question .upvote:hover{
+#questions_list li.question .upvote:hover, #questions_list li.question .upvote .voted {
     color: #8DFF33;
 }
 
