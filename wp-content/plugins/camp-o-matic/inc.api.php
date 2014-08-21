@@ -123,6 +123,7 @@ function campomatic_update_heartbeat( $post_id ) {
     $handle = fopen($version_heartbeat_file, 'w');
     fwrite( $handle, $version );
     fclose($handle);
+    return $version;
 }
 
 function campomatic_session_publish( $ID, $post ) {
