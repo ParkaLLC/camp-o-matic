@@ -24,6 +24,7 @@ get_currentuserinfo();
 		var nonce = '<?php echo wp_create_nonce('wp_json'); ?>';
         var base_url = '/campomatic/#/';
         var home_url = '<?php echo home_url(); ?>';
+        var session_version = '0';
 	</script>
 
 </head>

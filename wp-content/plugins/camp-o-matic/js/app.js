@@ -46,7 +46,6 @@ campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
         $scope.base_url = base_url;
         $scope.modalShown = false;
         $scope.showSubHeader = false;
-        $scope.
         $scope.toggleModal = function() {
             $scope.modalShown = !$scope.modalShown;
             var d = document.getElementById("campomaticBody");
@@ -113,17 +112,17 @@ campomaticControllers.controller('SingleSessionCtrl',
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
             function() {
                 // we will initiate the heartbeat once we have information about the session
-                $scope.version = $scope.SessionsSingle.meta.version;
+                session_version = $scope.SessionsSingle.meta.version;
                 $scope.refreshQuestions();
                 var heartbeatURL = "/wp-content/uploads/campomatic-hb/" + $scope.SessionsSingle.ID + ".txt";
-               var heartbeat = $interval(
+                var heartbeat = $interval(
                     function() {
                         $http({method:"GET", url : heartbeatURL, params: { 'foobar': new Date().getTime() } }).success(
                             function(data) {
-                                if( data != $scope.version ) {
+                                if( data != session_version ) {
                                     $scope.refreshQuestions();
-                                    $scope.version = data;
-                                    console.log( 'heartbeat update complete' );
+                                    session_version = data;
+                                    console.log( 'heartbeat updated' );
                                 } else {
                                     console.log( 'no update needed' );
                                 }
@@ -241,6 +240,7 @@ campomaticControllers.controller('AskCtrl', ['$scope', 'QuestionService',
                         alert(s.message);
                     } else {
                         $scope.successMessage = s.message;
+                        session_version = s.session_version;
                         $scope.refreshQuestions();
                     }
                 }
@@ -285,7 +285,8 @@ campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
                     if(s.error) {
                         alert(s.message);
                     } else {
-                        $scope.Questions = $scope.refreshQuestions()
+                        session_version = s.session_version;
+                        $scope.Questions = $scope.refreshQuestions();
                     }
                 }
             );
@@ -323,6 +324,7 @@ campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
                 "user" : $scope.user.ID,
             };
             QuestionService.Upvote.save( data, function(s) {
+                session_version = s.session_version;
                 $scope.Questions = $scope.refreshQuestions();
             } );
         };
