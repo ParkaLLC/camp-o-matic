@@ -46,6 +46,7 @@ campomaticControllers.controller('UserCtrl', ['$scope', 'UserService',
         $scope.base_url = base_url;
         $scope.modalShown = false;
         $scope.showSubHeader = false;
+        $scope.
         $scope.toggleModal = function() {
             $scope.modalShown = !$scope.modalShown;
             var d = document.getElementById("campomaticBody");
@@ -107,9 +108,7 @@ campomaticControllers.controller('SingleSessionCtrl',
         $scope.questionOrder = 'meta.total_votes';
         $scope.Questions = {};
         $scope.refreshQuestions = function() {
-            var $httpDefaultCache = $cacheFactory.get('$http');
-            $httpDefaultCache.removeAll();
-            $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id });
+            $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id, 'foobar': new Date().getTime() });
         };
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
             function() {
