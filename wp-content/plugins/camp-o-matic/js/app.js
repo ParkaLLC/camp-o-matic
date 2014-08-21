@@ -99,12 +99,16 @@ campomaticControllers.controller('SessionListCtrl', ['$scope', 'SessionService',
 /*
 Single Session Controller
  */
-campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService', '$routeParams', '$resource', '$interval', '$http', 'QuestionService',
-    function($scope, SessionService, $routeParams, $resource, $interval, $http, QuestionService) {
+campomaticControllers.controller('SingleSessionCtrl',
+    ['$scope', 'SessionService', '$routeParams', '$resource', '$interval', '$http', 'QuestionService', '$cacheFactory',
+    function($scope, SessionService, $routeParams, $resource, $interval, $http, QuestionService, $cacheFactory) {
+
         $scope.Auth();
         $scope.questionOrder = 'meta.total_votes';
         $scope.Questions = {};
         $scope.refreshQuestions = function() {
+            var $httpDefaultCache = $cacheFactory.get('$http');
+            $httpDefaultCache.removeAll();
             $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id });
         };
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
@@ -115,7 +119,6 @@ campomaticControllers.controller('SingleSessionCtrl', ['$scope', 'SessionService
                 var heartbeatURL = "/wp-content/uploads/campomatic-hb/" + $scope.SessionsSingle.ID + ".txt";
                var heartbeat = $interval(
                     function() {
-                        var foobar = new Date().getTime();
                         $http({method:"GET", url : heartbeatURL, params: { 'foobar': new Date().getTime() } }).success(
                             function(data) {
                                 if( data != $scope.version ) {
