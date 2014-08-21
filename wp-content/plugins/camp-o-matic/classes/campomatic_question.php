@@ -43,7 +43,7 @@ class Campomatic_Question {
 
         }
         update_post_meta( $data['ID'], '_campomatic_votes', $votes );
-        $session_id = get_post_meta($data['id'], '_campomatic_session_id', true);
+        $session_id = get_post_meta($data['ID'], '_campomatic_session_id', true);
         campomatic_update_heartbeat($session_id);
 
         $result = array(
