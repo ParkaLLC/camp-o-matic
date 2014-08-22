@@ -105,9 +105,14 @@ campomaticControllers.controller('SingleSessionCtrl',
 
         $scope.Auth();
         $scope.questionOrder = 'meta.total_votes';
-        $scope.Questions = {};
+        $scope.Questions = [];
         $scope.refreshQuestions = function() {
-            $scope.Questions = QuestionService.QuestionList.query({ session_id : $routeParams.session_id, 'foobar': new Date().getTime() });
+            QuestionService.QuestionList.query(
+                { session_id : $routeParams.session_id, 'foobar': new Date().getTime() },
+                function (s) {
+                    $scope.Questions = s;
+                }
+            );
         };
         $scope.SessionsSingle = SessionService.SingleSession.get({ session_id : $routeParams.session_id },
             function() {
