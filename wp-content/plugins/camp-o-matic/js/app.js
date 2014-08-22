@@ -310,7 +310,7 @@ campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
 
         $scope.iconClass = function() {
             var iconClass = "fa fa-heart";
-            if( $scope.question.meta.votes.indexOf($scope.user.ID) > -1 ) {
+            if( $scope.question.meta.voted ) {
                 iconClass += " voted";
             }
             return iconClass;
@@ -319,7 +319,7 @@ campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
         $scope.upvote = function() {
 
             var vote_direction = "up";
-            if( $scope.question.meta.votes.indexOf($scope.user.ID) > -1 ) {
+            if( $scope.question.meta.voted ) {
                 vote_direction = "down";
             }
 
@@ -336,7 +336,7 @@ campomaticControllers.controller('QuestionCtrl',[ '$scope', 'QuestionService',
 
         $scope.iconTitle = function() {
             var title = "I need to know the answer to this question!!";
-            if( $scope.question.meta.votes.indexOf($scope.user.ID) > -1 ) {
+            if( $scope.question.meta.voted ) {
                 title = "I changed my mind. This is a dumb question.";
             }
             return title;

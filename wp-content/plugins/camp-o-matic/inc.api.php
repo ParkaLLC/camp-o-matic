@@ -59,6 +59,7 @@ function campomatic_session_meta( $_post, $post, $context ) {
         return $_post;
 
     if( $_post['type'] == 'happiness' ) {
+        global $current_user;
         $asker = get_user_by( 'id', $_post['author']);
         $twitter = get_user_meta( $asker->ID, '_campomatic_twitter', true);
         if( empty($twitter) )
@@ -70,7 +71,13 @@ function campomatic_session_meta( $_post, $post, $context ) {
         $votes = get_post_meta( $_post['ID'], '_campomatic_votes', true);
         if( empty($votes))
             $votes = array();
-        $_post['meta']['votes'] = $votes;
+
+        $voted = false;
+
+        if( in_array($current_user->ID, $votes))
+            $voted = true;
+
+        $_post['meta']['voted'] = $voted;
 
         $num_votes = count($votes);
         $_post['meta']['total_votes'] = $num_votes;
